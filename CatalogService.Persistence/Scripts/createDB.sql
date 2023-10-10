@@ -1,5 +1,5 @@
 -- Create the Category table
-CREATE TABLE Category
+CREATE TABLE Categories
 (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Name NVARCHAR(50) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE Category
 );
 
 -- Create the Item table
-CREATE TABLE Item
+CREATE TABLE Items
 (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Name NVARCHAR(50) NOT NULL,
