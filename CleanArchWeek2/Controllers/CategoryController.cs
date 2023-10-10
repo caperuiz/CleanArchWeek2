@@ -60,7 +60,7 @@ namespace CatalogService.API.Controllers
                 return NotFound();
             }
 
-            return NoContent();
+            return Ok(category);
         }
 
         [HttpDelete("{id}")]
@@ -72,7 +72,7 @@ namespace CatalogService.API.Controllers
                 return NotFound();
             }
 
-            return NoContent();
+            return Ok(id);
         }
     }
 }
