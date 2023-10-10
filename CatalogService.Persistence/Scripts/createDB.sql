@@ -20,9 +20,9 @@ CREATE TABLE Items
 );
 
 -- Create a foreign key constraint to link items to categories
-ALTER TABLE Item
+ALTER TABLE Items
 ADD CONSTRAINT FK_Item_Category FOREIGN KEY (CategoryId)
-REFERENCES Category(Id);
+REFERENCES Categories (Id);
 
 -- Optionally, you can create an index for the Category table for better performance
 -- CREATE INDEX IX_Category_ParentCategoryId ON Category(ParentCategoryId);
