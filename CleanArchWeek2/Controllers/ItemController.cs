@@ -4,6 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Entities;
 using System.Threading.Tasks;
+using System.Numerics;
+using System.Reflection.Metadata;
+using System.Runtime.Intrinsics.X86;
+using System;
+using CatalogService.Domain;
 
 namespace CatalogService.API.Controllers
 {
@@ -38,9 +43,9 @@ namespace CatalogService.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Item>> AddItem(Item item)
+        public async Task<ActionResult<Item>> AddItem(CreateItemInputDto item)
         {
-            var addedItem = await _itemService.AddItemAsync(item);
+            var addedItem = await _itemService.AddItemAsync(MapCreateItemInputDtoToItem(item));
             return CreatedAtAction(nameof(GetItemById), new { id = addedItem.Id }, addedItem);
         }
 
@@ -72,5 +77,19 @@ namespace CatalogService.API.Controllers
 
             return NoContent();
         }
+
+        private Item MapCreateItemInputDtoToItem(CreateItemInputDto inputDto)
+        {
+            return new Item
+            {
+                Name = inputDto.Name,
+                Description = inputDto.Description,
+                ImageUrl = inputDto.ImageUrl,
+                CategoryId = inputDto.CategoryId,
+                Price = inputDto.Price,
+                Amount = inputDto.Amount
+            };
+        }
+  
     }
 }

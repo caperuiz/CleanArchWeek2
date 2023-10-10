@@ -14,7 +14,7 @@ namespace CatalogService.Domain.Entities
         public decimal Price { get; set; }
         public int Amount { get; set; }
 
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
         // Add navigation properties or other properties as needed
     }
 }
