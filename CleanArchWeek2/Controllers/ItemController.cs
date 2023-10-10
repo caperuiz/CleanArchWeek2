@@ -9,6 +9,8 @@ using System.Reflection.Metadata;
 using System.Runtime.Intrinsics.X86;
 using System;
 using CatalogService.Domain;
+using AutoMapper;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace CatalogService.API.Controllers
 {
@@ -17,10 +19,11 @@ namespace CatalogService.API.Controllers
     public class ItemController : ControllerBase
     {
         private readonly IItemService _itemService;
-
-        public ItemController(IItemService itemService)
+        private readonly IMapper _mapper;
+        public ItemController(IItemService itemService, IMapper mapper)
         {
             _itemService = itemService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -45,6 +48,7 @@ namespace CatalogService.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Item>> AddItem(CreateItemInputDto item)
         {
+            //var mappedItem = _mapper.Map<Item>(item);
             var addedItem = await _itemService.AddItemAsync(MapCreateItemInputDtoToItem(item));
             return CreatedAtAction(nameof(GetItemById), new { id = addedItem.Id }, addedItem);
         }
