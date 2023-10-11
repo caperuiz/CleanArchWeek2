@@ -3,7 +3,7 @@ CREATE TABLE Categories
 (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Name NVARCHAR(50) NOT NULL,
-    ImageUrl NVARCHAR(MAX) 
+    Image NVARCHAR(MAX) 
 );
 
 -- Create the Item table

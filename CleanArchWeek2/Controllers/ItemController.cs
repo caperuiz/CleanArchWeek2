@@ -1,6 +1,4 @@
-﻿// CatalogService.API/Controllers/ItemController.cs
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Entities;
 using System.Threading.Tasks;
@@ -8,9 +6,9 @@ using System.Numerics;
 using System.Reflection.Metadata;
 using System.Runtime.Intrinsics.X86;
 using System;
-using CatalogService.Domain;
 using AutoMapper;
 using Microsoft.AspNetCore.Components.Forms;
+using CatalogService.Domain.Dtos;
 
 namespace CatalogService.API.Controllers
 {

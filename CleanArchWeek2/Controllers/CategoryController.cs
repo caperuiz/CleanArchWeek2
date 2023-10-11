@@ -6,6 +6,8 @@ using CatalogService.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using CatalogService.Domain.Dtos;
 
 namespace CatalogService.API.Controllers
 {
@@ -14,10 +16,12 @@ namespace CatalogService.API.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
+        private readonly IMapper _mapper;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService, IMapper mapper)
         {
             _categoryService = categoryService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -40,9 +44,10 @@ namespace CatalogService.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Category>> AddCategory(Category category)
+        public async Task<ActionResult<Category>> AddCategory(CreateCategoryInputDto category)
         {
-            var addedCategory = await _categoryService.AddCategoryAsync(category);
+            var mappedCategory = _mapper.Map<Category>(category);
+            var addedCategory = await _categoryService.AddCategoryAsync(mappedCategory);
             return CreatedAtAction(nameof(GetCategoryById), new { id = addedCategory.Id }, addedCategory);
         }
 
