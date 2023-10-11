@@ -49,7 +49,7 @@ namespace CatalogService.API.Controllers
         public async Task<ActionResult<Item>> AddItem(CreateItemInputDto item)
         {
             var mappedItem = _mapper.Map<Item>(item);
-            var addedItem = await _itemService.AddItemAsync(MapCreateItemInputDtoToItem(item));
+            var addedItem = await _itemService.AddItemAsync(mappedItem);
             return CreatedAtAction(nameof(GetItemById), new { id = addedItem.Id }, addedItem);
         }
 
