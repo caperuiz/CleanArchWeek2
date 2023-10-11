@@ -48,7 +48,7 @@ namespace CatalogService.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Item>> AddItem(CreateItemInputDto item)
         {
-            //var mappedItem = _mapper.Map<Item>(item);
+            var mappedItem = _mapper.Map<Item>(item);
             var addedItem = await _itemService.AddItemAsync(MapCreateItemInputDtoToItem(item));
             return CreatedAtAction(nameof(GetItemById), new { id = addedItem.Id }, addedItem);
         }
