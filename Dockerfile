@@ -1,22 +1,23 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
+# Use a base image with the .NET runtime
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
+# Use a base image with the .NET SDK for building
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["CleanArchWeek2/CleanArchWeek2.csproj", "CleanArchWeek2/"]
-RUN dotnet restore "CleanArchWeek2/CleanArchWeek2.csproj"
+COPY ["CatalogService.API/CatalogService.API.csproj", "CatalogService.API/"]
+RUN dotnet restore "CatalogService.API/CatalogService.API.csproj"
 COPY . .
-WORKDIR "/src/CleanArchWeek2"
-RUN dotnet build "CleanArchWeek2.csproj" -c Release -o /app/build
+WORKDIR "/src/CatalogService.API"
+RUN dotnet build "CatalogService.API.csproj" -c Release -o /app/build
 
+# Publish the application
 FROM build AS publish
-RUN dotnet publish "CleanArchWeek2.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "CatalogService.API.csproj" -c Release -o /app/publish
 
+# Create the final image
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CleanArchWeek2.dll"]
+ENTRYPOINT ["dotnet", "CatalogService.API.dll"]
