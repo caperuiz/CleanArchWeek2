@@ -33,7 +33,7 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
         run: |
-          docker build -t my-app:latest -f Dockerfile .
+          docker build -t my-app:latest -f CleanArchWeek2/CatalogService.API/Dockerfile .
           echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
           docker tag my-app:latest $DOCKERHUB_USERNAME/my-app:latest
           docker push $DOCKERHUB_USERNAME/my-app:latest
