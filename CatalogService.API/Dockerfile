@@ -7,13 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["CleanArchWeek2/CatalogService.API.csproj", "CleanArchWeek2/"]
+COPY ["CatalogService.API/CatalogService.API.csproj", "CatalogService.API/"]
 COPY ["CatalogService.Application/CatalogService.Application.csproj", "CatalogService.Application/"]
 COPY ["CatalogService.Domain/CatalogService.Domain.csproj", "CatalogService.Domain/"]
 COPY ["CatalogService.Persistence/CatalogService.Persistence.csproj", "CatalogService.Persistence/"]
-RUN dotnet restore "CleanArchWeek2/CatalogService.API.csproj"
+RUN dotnet restore "CatalogService.API/CatalogService.API.csproj"
 COPY . .
-WORKDIR "/src/CleanArchWeek2"
+WORKDIR "/src/CatalogService.API"
 RUN dotnet build "CatalogService.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
