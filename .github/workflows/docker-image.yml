@@ -2,11 +2,9 @@ name: Build and Publish .NET Core 6 App to Docker Hub
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "master" ]
   pull_request:
-    branches:
-      - main
+    branches: [ "master" ]
 
 jobs:
   build-and-publish:
