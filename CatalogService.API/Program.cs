@@ -24,6 +24,8 @@ builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 
+builder.Services.AddTransient<CreateItemValidator>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
