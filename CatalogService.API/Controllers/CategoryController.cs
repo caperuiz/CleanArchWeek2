@@ -25,14 +25,14 @@ namespace CatalogService.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        public async Task<ActionResult<List<Category>>> GetCategoriesAsync()
         {
             var categories = await _categoryService.GetAllCategoriesAsync();
             return Ok(categories);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategoryById(int id)
+        public async Task<ActionResult<Category>> GetCategoryByIdAsync(int id)
         {
             var category = await _categoryService.GetCategoryByIdAsync(id);
             if (category == null)
@@ -44,21 +44,16 @@ namespace CatalogService.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Category>> AddCategory(CreateCategoryInputDto category)
+        public async Task<ActionResult<Category>> AddCategoryAsync(CreateCategoryInputDto category)
         {
             var mappedCategory = _mapper.Map<Category>(category);
             var addedCategory = await _categoryService.AddCategoryAsync(mappedCategory);
-            return CreatedAtAction(nameof(GetCategoryById), new { id = addedCategory.Id }, addedCategory);
+            return CreatedAtAction(nameof(GetCategoryByIdAsync), new { id = addedCategory.Id }, addedCategory);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, Category category)
+        public async Task<IActionResult> UpdateCategoryAsync(Category category)
         {
-            if (id != category.Id)
-            {
-                return BadRequest();
-            }
-
             var updatedCategory = await _categoryService.UpdateCategoryAsync(category);
             if (updatedCategory == null)
             {
@@ -69,7 +64,7 @@ namespace CatalogService.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCategoryAsync(int id)
         {
             var result = await _categoryService.DeleteCategoryAsync(id);
             if (!result)

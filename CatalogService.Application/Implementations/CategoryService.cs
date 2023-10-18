@@ -15,7 +15,7 @@ namespace CatalogService.Application.Services
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
+        public async Task<List<Category>> GetAllCategoriesAsync()
         {
             return await _categoryRepository.GetAllAsync();
         }

@@ -8,7 +8,7 @@ namespace CatalogService.Application.Interfaces
 {
     public interface IItemService
     {
-        Task<IEnumerable<Item>> GetAllItemsAsync();
+        Task<List<Item>> GetAllItemsAsync();
         Task<Item> GetItemByIdAsync(int id);
         Task<Item> AddItemAsync(Item item);
         Task<Item> UpdateItemAsync(Item item);

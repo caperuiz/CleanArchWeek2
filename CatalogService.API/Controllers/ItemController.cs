@@ -25,14 +25,14 @@ namespace CatalogService.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Item>>> GetItems()
+        public async Task<ActionResult<List<Item>>> GetItemsAsync()
         {
             var items = await _itemService.GetAllItemsAsync();
             return Ok(items);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Item>> GetItemById(int id)
+        public async Task<ActionResult<Item>> GetItemByIdAsync(int id)
         {
             var item = await _itemService.GetItemByIdAsync(id);
             if (item == null)
@@ -44,21 +44,16 @@ namespace CatalogService.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Item>> AddItem(CreateItemInputDto item)
+        public async Task<ActionResult<Item>> AddItemAsync(CreateItemInputDto item)
         {
             var mappedItem = _mapper.Map<Item>(item);
             var addedItem = await _itemService.AddItemAsync(mappedItem);
-            return CreatedAtAction(nameof(GetItemById), new { id = addedItem.Id }, addedItem);
+            return CreatedAtAction(nameof(AddItemAsync), new { id = addedItem.Id }, addedItem);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateItem(int id, Item item)
+        public async Task<IActionResult> UpdateItemAsync(Item item)
         {
-            if (id != item.Id)
-            {
-                return BadRequest();
-            }
-
             var updatedItem = await _itemService.UpdateItemAsync(item);
             if (updatedItem == null)
             {
@@ -69,7 +64,7 @@ namespace CatalogService.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteItem(int id)
+        public async Task<IActionResult> DeleteItemAsync(int id)
         {
             var result = await _itemService.DeleteItemAsync(id);
             if (!result)

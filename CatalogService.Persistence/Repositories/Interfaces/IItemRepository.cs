@@ -9,7 +9,7 @@ namespace CatalogService.Persistence.Repositories.Interfaces
 {
         public interface IItemRepository
         {
-            Task<IEnumerable<Item>> GetAllAsync();
+            Task<List<Item>> GetAllAsync();
             Task<Item> GetByIdAsync(int id);
             Task<Item> AddAsync(Item item);
             Task<Item> UpdateAsync(Item item);

@@ -18,7 +18,7 @@ namespace CatalogService.Application.Implementations
             _itemRepository = itemRepository;
         }
 
-        public async Task<IEnumerable<Item>> GetAllItemsAsync()
+        public async Task<List<Item>> GetAllItemsAsync()
         {
             return await _itemRepository.GetAllAsync();
         }

@@ -19,7 +19,7 @@ namespace CatalogService.Persistence.Repositories
                 _context = context;
             }
 
-            public async Task<IEnumerable<Item>> GetAllAsync()
+            public async Task<List<Item>> GetAllAsync()
             {
                 return await _context.Items.ToListAsync();
             }
