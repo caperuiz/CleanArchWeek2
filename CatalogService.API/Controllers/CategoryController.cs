@@ -24,14 +24,14 @@ namespace CatalogService.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("get")]
         public async Task<ActionResult<List<Category>>> GetCategoriesAsync()
         {
             var categories = await _categoryService.GetAllCategoriesAsync();
             return Ok(categories);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("get/{id}")]
         public async Task<ActionResult<Category>> GetCategoryByIdAsync(int id)
         {
             var category = await _categoryService.GetCategoryByIdAsync(id);
@@ -43,7 +43,7 @@ namespace CatalogService.API.Controllers
             return Ok(category);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult<Category>> AddCategoryAsync(CreateCategoryInputDto category)
         {
             var mappedCategory = _mapper.Map<Category>(category);
@@ -51,7 +51,7 @@ namespace CatalogService.API.Controllers
             return CreatedAtAction(nameof(GetCategoryByIdAsync), new { id = addedCategory.Id }, addedCategory);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateCategoryAsync(Category category)
         {
             var updatedCategory = await _categoryService.UpdateCategoryAsync(category);
@@ -63,7 +63,7 @@ namespace CatalogService.API.Controllers
             return Ok(category);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteCategoryAsync(int id)
         {
             var result = await _categoryService.DeleteCategoryAsync(id);

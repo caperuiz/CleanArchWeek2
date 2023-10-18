@@ -24,14 +24,14 @@ namespace CatalogService.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("get")]
         public async Task<ActionResult<List<Item>>> GetItemsAsync()
         {
             var items = await _itemService.GetAllItemsAsync();
             return Ok(items);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("get/{id}")]
         public async Task<ActionResult<Item>> GetItemByIdAsync(int id)
         {
             var item = await _itemService.GetItemByIdAsync(id);
@@ -43,7 +43,7 @@ namespace CatalogService.API.Controllers
             return Ok(item);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult<Item>> AddItemAsync(CreateItemInputDto item)
         {
             var mappedItem = _mapper.Map<Item>(item);
@@ -51,7 +51,7 @@ namespace CatalogService.API.Controllers
             return CreatedAtAction(nameof(AddItemAsync), new { id = addedItem.Id }, addedItem);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateItemAsync(Item item)
         {
             var updatedItem = await _itemService.UpdateItemAsync(item);
@@ -63,7 +63,7 @@ namespace CatalogService.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteItemAsync(int id)
         {
             var result = await _itemService.DeleteItemAsync(id);
