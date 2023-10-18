@@ -8,13 +8,19 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using AutoMapper;
+using CatalogService.Domain.Dtos;
+using FluentValidation;
+using CatalogService.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var conn = builder.Configuration.GetSection("ConnectionString").Get<string>();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(conn));
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//                options.UseSqlServer(conn));
+
+builder.Services.AddScoped<ApplicationDbContext>(_ => new ApplicationDbContext(conn));
+
 
 // Register application services
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -24,7 +30,7 @@ builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 
-builder.Services.AddTransient<CreateItemValidator>();
+builder.Services.AddTransient<IValidator<Item>, CreateItemValidator>();
 
 
 builder.Services.AddControllers();
