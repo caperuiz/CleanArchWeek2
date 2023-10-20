@@ -1,9 +1,12 @@
 ﻿// CatalogService.Persistence/Repositories/CategoryRepository.cs
 
-using CatalogService.Domain.Entities;
 using CatalogService.Persistence.Contexts;
+using CatalogService.Persistence.Entities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,14 +15,21 @@ namespace CatalogService.Persistence.Repositories
     public class CategoryRepository : ICategoryRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public CategoryRepository(ApplicationDbContext context)
+        public CategoryRepository( IConfiguration configuration)
         {
-            _context = context;
+            _configuration = configuration;
         }
 
         public async Task<List<Category>> GetAllAsync()
         {
+            using (IDbConnection connection = new SqlConnection(_configuration.GetConnectionString("DBConnection")))
+            {
+                connection.Open();
+                var result = await connection.QueryAsync<Category>(Category.AllContact);
+                return result.ToList();
+            }
             return await _context.Categories.ToListAsync();
         }
 

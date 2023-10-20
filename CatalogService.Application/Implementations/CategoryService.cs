@@ -1,10 +1,10 @@
 ﻿// CatalogService.Application/Services/CategoryService.cs
 
 using CatalogService.Application.Interfaces;
-using CatalogService.Domain.Entities;
+using CatalogService.Persistence.Entities;
 using CatalogService.Persistence.Repositories;
 
-namespace CatalogService.Application.Services
+namespace CatalogService.Application.Implementations
 {
     public class CategoryService : ICategoryService
     {

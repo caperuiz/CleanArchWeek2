@@ -1,4 +1,5 @@
 ﻿using CatalogService.Application.Interfaces;
+using CatalogService.Common.Dtos;
 using CatalogService.Domain.Dtos;
 using CatalogService.Domain.Entities;
 using CatalogService.Persistence.Repositories.Interfaces;
@@ -32,15 +33,15 @@ namespace CatalogService.Application.Implementations
             return await _itemRepository.GetByIdAsync(id);
         }
 
-        public async Task<Item> AddItemAsync(Item item)
+        public async Task<bool> AddItemAsync(IItemDto itemDto)
         {
-            var validationResult = _validator.Validate(item);
+            var validationResult = _validator.Validate(itemDto);
 
             if (!validationResult.IsValid)
             {
-                return await _itemRepository.AddAsync(item);
+                return await _itemRepository.AddItemAsync(itemDto);
             }
-            return new Item();
+            return false;
         }
 
         public async Task<Item> UpdateItemAsync(Item item)

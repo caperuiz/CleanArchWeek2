@@ -2,12 +2,12 @@
 
 using Microsoft.AspNetCore.Mvc;
 using CatalogService.Application.Interfaces;
-using CatalogService.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using CatalogService.Domain.Dtos;
+using CatalogService.Persistence.Entities;
 
 namespace CatalogService.API.Controllers
 {

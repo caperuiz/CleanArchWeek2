@@ -1,4 +1,5 @@
-﻿using CatalogService.Domain.Entities;
+﻿using CatalogService.Persistence.Entities;
+
 public interface ICategoryRepository
 {
     Task<List<Category>> GetAllAsync();

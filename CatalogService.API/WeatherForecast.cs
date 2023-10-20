@@ -1,4 +1,4 @@
-namespace CleanArchWeek2
+namespace CatalogService.API
 {
     public class WeatherForecast
     {

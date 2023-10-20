@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using CatalogService.Common.Dtos;
 using CatalogService.Domain.Dtos;
-using CatalogService.Domain.Entities;
+using CatalogService.Persistence;
+using CatalogService.Persistence.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,8 @@ namespace CatalogService.Application.Mappings
             CreateMap<Item, CreateItemInputDto>();
             CreateMap<CreateCategoryInputDto, Category>();
             CreateMap<Category, CreateCategoryInputDto>();
+            CreateMap<Item, IItemDto>();
+            CreateMap<IItemDto, Item>();
         }
     }
 }

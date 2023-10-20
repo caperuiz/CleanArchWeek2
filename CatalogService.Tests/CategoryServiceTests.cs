@@ -5,7 +5,7 @@ namespace CatalogService.Tests
     using Xunit;
     using Moq;
     using CatalogService.Application.Services;
-    using CatalogService.Domain.Entities;
+    using CatalogService.Persistence.Entities;
 
     public class CategoryServiceTests
     {

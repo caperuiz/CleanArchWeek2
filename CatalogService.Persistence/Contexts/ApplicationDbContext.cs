@@ -1,8 +1,8 @@
 ﻿// CatalogService.Persistence/Contexts/ApplicationDbContext.cs
 
 using Microsoft.EntityFrameworkCore;
-using CatalogService.Domain.Entities;
 using System.Collections.Generic;
+using CatalogService.Persistence.Entities;
 
 namespace CatalogService.Persistence.Contexts
 {

@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CatalogService.Common.Dtos;
 using CatalogService.Domain.Entities;
 
 namespace CatalogService.Application.Interfaces
@@ -10,7 +11,7 @@ namespace CatalogService.Application.Interfaces
     {
         Task<List<Item>> GetAllItemsAsync();
         Task<Item> GetItemByIdAsync(int id);
-        Task<Item> AddItemAsync(Item item);
+        Task<Item> AddItemAsync(IItemDto item);
         Task<Item> UpdateItemAsync(Item item);
         Task<bool> DeleteItemAsync(int id);
     }

@@ -1,6 +1,5 @@
 using CatalogService.Application.Implementations;
 using CatalogService.Application.Interfaces;
-using CatalogService.Application.Services;
 using CatalogService.Persistence.Contexts;
 using CatalogService.Persistence.Repositories;
 using CatalogService.Persistence.Repositories.Interfaces;

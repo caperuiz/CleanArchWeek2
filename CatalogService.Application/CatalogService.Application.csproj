@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CatalogService.Domain\CatalogService.Domain.csproj" />
     <ProjectReference Include="..\CatalogService.Persistence\CatalogService.Persistence.csproj" />
+    <ProjectReference Include="..\CatalogServices.Common\CatalogService.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

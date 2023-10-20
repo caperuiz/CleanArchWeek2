@@ -1,4 +1,5 @@
-﻿using CatalogService.Domain.Entities;
+﻿using CatalogService.Common.Dtos;
+using CatalogService.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace CatalogService.Persistence.Repositories.Interfaces
         {
             Task<List<Item>> GetAllAsync();
             Task<Item> GetByIdAsync(int id);
-            Task<Item> AddAsync(Item item);
+            Task<Item> AddItemAsync(IItemDto item);
             Task<Item> UpdateAsync(Item item);
             Task<bool> DeleteAsync(int id);
         }

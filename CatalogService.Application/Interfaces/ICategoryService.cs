@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CatalogService.Domain.Entities;
+using CatalogService.Persistence.Entities;
 
 namespace CatalogService.Application.Interfaces
 {

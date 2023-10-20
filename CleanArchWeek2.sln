@@ -5,13 +5,15 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.API", "CatalogService.API\CatalogService.API.csproj", "{DF632A2C-D2BB-4892-9A0A-A40429D62225}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.Application", "CatalogService.Application\CatalogService.Application.csproj", "{07BB7BEF-9682-4EAD-8E9E-4641ACC4FF2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.Application", "CatalogService.Application\CatalogService.Application.csproj", "{07BB7BEF-9682-4EAD-8E9E-4641ACC4FF2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.Domain", "CatalogService.Domain\CatalogService.Domain.csproj", "{8A386A44-BE8A-4010-85DB-8CFA4D87CD00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.Domain", "CatalogService.Domain\CatalogService.Domain.csproj", "{8A386A44-BE8A-4010-85DB-8CFA4D87CD00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.Persistence", "CatalogService.Persistence\CatalogService.Persistence.csproj", "{3F4B137F-C4B7-473A-884D-F4ABE7CD8E9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.Persistence", "CatalogService.Persistence\CatalogService.Persistence.csproj", "{3F4B137F-C4B7-473A-884D-F4ABE7CD8E9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.Tests", "CatalogService.Tests\CatalogService.Tests.csproj", "{C0881204-A291-42AC-B8D6-6B059459BBCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.Tests", "CatalogService.Tests\CatalogService.Tests.csproj", "{C0881204-A291-42AC-B8D6-6B059459BBCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.Common", "CatalogServices.Common\CatalogService.Common.csproj", "{F1BA8458-271E-4DB6-AD7B-2BA12E45C89B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C0881204-A291-42AC-B8D6-6B059459BBCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0881204-A291-42AC-B8D6-6B059459BBCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0881204-A291-42AC-B8D6-6B059459BBCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1BA8458-271E-4DB6-AD7B-2BA12E45C89B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1BA8458-271E-4DB6-AD7B-2BA12E45C89B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1BA8458-271E-4DB6-AD7B-2BA12E45C89B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1BA8458-271E-4DB6-AD7B-2BA12E45C89B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

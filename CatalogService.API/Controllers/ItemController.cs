@@ -34,7 +34,7 @@ namespace CatalogService.API.Controllers
         [HttpGet("get/{id}")]
         public async Task<ActionResult<Item>> GetItemByIdAsync(int id)
         {
-            var item = await _itemService.GetItemByIdAsync(id);
+            Item item = await _itemService.GetItemByIdAsync(id);
             if (item == null)
             {
                 return NotFound();
@@ -46,8 +46,8 @@ namespace CatalogService.API.Controllers
         [HttpPost("create")]
         public async Task<ActionResult<Item>> AddItemAsync(CreateItemInputDto item)
         {
-            var mappedItem = _mapper.Map<Item>(item);
-            var addedItem = await _itemService.AddItemAsync(mappedItem);
+            //var mappedItem = _mapper.Map<Item>(item);
+            var addedItem = await _itemService.AddItemAsync(item);
             return CreatedAtAction(nameof(AddItemAsync), new { id = addedItem.Id }, addedItem);
         }
 
