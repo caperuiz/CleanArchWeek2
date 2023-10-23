@@ -1,16 +1,8 @@
 ﻿// CatalogService.Domain/Entities/Item.cs
 
-<<<<<<< HEAD:CatalogService.Persistence/Entities/Item.cs
-using CatalogService.Common.Dtos;
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace CatalogService.Persistence
-=======
 namespace CatalogService.Domain.Entities
->>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb:CatalogService.Domain/Entities/Item.cs
 {
-    public partial class Item
+    public class Item
     {
         public int Id { get; set; }
 

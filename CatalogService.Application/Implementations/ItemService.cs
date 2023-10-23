@@ -1,9 +1,4 @@
 ﻿using CatalogService.Application.Interfaces;
-<<<<<<< HEAD
-using CatalogService.Common.Dtos;
-using CatalogService.Domain.Dtos;
-=======
->>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb
 using CatalogService.Domain.Entities;
 using CatalogService.Persistence.Repositories.Interfaces;
 using FluentValidation;
@@ -31,19 +26,15 @@ namespace CatalogService.Application.Implementations
             return await _itemRepository.GetItemByIdAsync(id);
         }
 
-        public async Task<bool> AddItemAsync(IItemDto itemDto)
+        public async Task<Item> AddItemAsync(Item item)
         {
-            var validationResult = _validator.Validate(itemDto);
+            var validationResult = _validator.Validate(item);
 
             if (!validationResult.IsValid)
             {
-<<<<<<< HEAD
-                return await _itemRepository.AddItemAsync(itemDto);
-=======
                 return await _itemRepository.AddItemAsync(item);
->>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb
             }
-            return false;
+            return new Item();
         }
 
         public async Task<Item> UpdateItemAsync(Item item)

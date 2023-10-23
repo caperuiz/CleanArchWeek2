@@ -1,22 +1,10 @@
 ﻿// CatalogService.API/Controllers/CategoryController.cs
 
-<<<<<<< HEAD
-using Microsoft.AspNetCore.Mvc;
-using CatalogService.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-=======
->>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb
 using AutoMapper;
 using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Dtos;
-<<<<<<< HEAD
-using CatalogService.Persistence.Entities;
-=======
 using CatalogService.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
->>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb
 
 namespace CatalogService.API.Controllers
 {

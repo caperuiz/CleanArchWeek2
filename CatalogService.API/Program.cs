@@ -1,10 +1,7 @@
 using CatalogService.Application.Implementations;
 using CatalogService.Application.Interfaces;
-<<<<<<< HEAD
-=======
 using CatalogService.Application.Services;
 using CatalogService.Domain.Entities;
->>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb
 using CatalogService.Persistence.Contexts;
 using CatalogService.Persistence.Repositories;
 using CatalogService.Persistence.Repositories.Interfaces;

@@ -6,12 +6,6 @@ namespace CatalogService.Tests
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
-<<<<<<< HEAD
-    using Moq;
-    using CatalogService.Application.Services;
-    using CatalogService.Persistence.Entities;
-=======
->>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb
 
     public class CategoryServiceTests
     {

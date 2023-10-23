@@ -1,5 +1,4 @@
-﻿using CatalogService.Common.Dtos;
-using CatalogService.Domain.Entities;
+﻿using CatalogService.Domain.Entities;
 using CatalogService.Persistence.Contexts;
 using CatalogService.Persistence.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -33,24 +32,12 @@ namespace CatalogService.Persistence.Repositories
             return item;
         }
 
-<<<<<<< HEAD
-            public async Task<Item> AddItemAsync(IItemDto itemDto)
-            {
-            //Mappear IItemDto con item de la db
-            Item entity= new Item();
-
-                _context.Items.Add(entity);
-                await _context.SaveChangesAsync();
-                return itemDto;
-            }
-=======
         public async Task<Item> UpdateItemAsync(Item item)
         {
             _context.Entry(item).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return item;
         }
->>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb
 
         public async Task<bool> DeleteItemAsync(int id)
         {
