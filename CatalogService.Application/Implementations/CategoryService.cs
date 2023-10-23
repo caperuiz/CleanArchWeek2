@@ -2,7 +2,6 @@
 
 using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Entities;
-using CatalogService.Persistence.Repositories;
 
 namespace CatalogService.Application.Services
 {
@@ -17,27 +16,27 @@ namespace CatalogService.Application.Services
 
         public async Task<List<Category>> GetAllCategoriesAsync()
         {
-            return await _categoryRepository.GetAllAsync();
+            return await _categoryRepository.GetAllCategoriesAsync();
         }
 
         public async Task<Category> GetCategoryByIdAsync(int id)
         {
-            return await _categoryRepository.GetByIdAsync(id);
+            return await _categoryRepository.GetCategoryByIdAsync(id);
         }
 
         public async Task<Category> AddCategoryAsync(Category category)
         {
-            return await _categoryRepository.AddAsync(category);
+            return await _categoryRepository.AddCategoryAsync(category);
         }
 
         public async Task<Category> UpdateCategoryAsync(Category category)
         {
-            return await _categoryRepository.UpdateAsync(category);
+            return await _categoryRepository.UpdateCategoryAsync(category);
         }
 
         public async Task<bool> DeleteCategoryAsync(int id)
         {
-            return await _categoryRepository.DeleteAsync(id);
+            return await _categoryRepository.DeleteCategoryAsync(id);
         }
     }
 }

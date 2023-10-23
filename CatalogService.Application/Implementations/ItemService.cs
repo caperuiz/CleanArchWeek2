@@ -1,13 +1,7 @@
 ﻿using CatalogService.Application.Interfaces;
-using CatalogService.Domain.Dtos;
 using CatalogService.Domain.Entities;
 using CatalogService.Persistence.Repositories.Interfaces;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CatalogService.Application.Implementations
 {
@@ -22,14 +16,14 @@ namespace CatalogService.Application.Implementations
             _validator = validator;
         }
 
-        public async Task<List<Item>> GetAllItemsAsync()
+        public async Task<List<Item>> GetAllItemsAsync(int categoryId, int page, int pageSize)
         {
-            return await _itemRepository.GetAllAsync();
+            return await _itemRepository.GetAllItemsAsync(categoryId, page, pageSize);
         }
 
         public async Task<Item> GetItemByIdAsync(int id)
         {
-            return await _itemRepository.GetByIdAsync(id);
+            return await _itemRepository.GetItemByIdAsync(id);
         }
 
         public async Task<Item> AddItemAsync(Item item)
@@ -38,19 +32,19 @@ namespace CatalogService.Application.Implementations
 
             if (!validationResult.IsValid)
             {
-                return await _itemRepository.AddAsync(item);
+                return await _itemRepository.AddItemAsync(item);
             }
             return new Item();
         }
 
         public async Task<Item> UpdateItemAsync(Item item)
         {
-            return await _itemRepository.UpdateAsync(item);
+            return await _itemRepository.UpdateItemAsync(item);
         }
 
         public async Task<bool> DeleteItemAsync(int id)
         {
-            return await _itemRepository.DeleteAsync(id);
+            return await _itemRepository.DeleteItemAsync(id);
         }
     }
 }

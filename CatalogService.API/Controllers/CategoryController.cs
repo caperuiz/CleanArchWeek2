@@ -1,13 +1,10 @@
 ﻿// CatalogService.API/Controllers/CategoryController.cs
 
-using Microsoft.AspNetCore.Mvc;
-using CatalogService.Application.Interfaces;
-using CatalogService.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
+using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Dtos;
+using CatalogService.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.API.Controllers
 {
@@ -25,7 +22,7 @@ namespace CatalogService.API.Controllers
         }
 
         [HttpGet("get")]
-        public async Task<ActionResult<List<Category>>> GetCategoriesAsync()
+        public async Task<ActionResult<List<Category>>> GetAllCategoriesAsync()
         {
             var categories = await _categoryService.GetAllCategoriesAsync();
             return Ok(categories);

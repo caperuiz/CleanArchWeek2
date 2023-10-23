@@ -3,9 +3,6 @@
 using CatalogService.Domain.Entities;
 using CatalogService.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CatalogService.Persistence.Repositories
 {
@@ -18,31 +15,31 @@ namespace CatalogService.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<List<Category>> GetAllAsync()
+        public async Task<List<Category>> GetAllCategoriesAsync()
         {
             return await _context.Categories.ToListAsync();
         }
 
-        public async Task<Category> GetByIdAsync(int id)
+        public async Task<Category> GetCategoryByIdAsync(int id)
         {
             return await _context.Categories.FindAsync(id);
         }
 
-        public async Task<Category> AddAsync(Category category)
+        public async Task<Category> AddCategoryAsync(Category category)
         {
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
             return category;
         }
 
-        public async Task<Category> UpdateAsync(Category category)
+        public async Task<Category> UpdateCategoryAsync(Category category)
         {
             _context.Entry(category).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return category;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteCategoryAsync(int id)
         {
             var category = await _context.Categories.FindAsync(id);
             if (category == null)

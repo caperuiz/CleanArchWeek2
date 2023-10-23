@@ -1,7 +1,4 @@
-﻿
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CatalogService.Domain.Entities;
+﻿using CatalogService.Domain.Entities;
 
 namespace CatalogService.Application.Interfaces
 {
