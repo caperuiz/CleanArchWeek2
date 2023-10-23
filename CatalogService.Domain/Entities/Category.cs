@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace CatalogService.Domain.Entities
+﻿namespace CatalogService.Domain.Entities
 {
     public class Category
     {
@@ -9,7 +6,7 @@ namespace CatalogService.Domain.Entities
 
         public string Name { get; set; }
 
-       // [Url(ErrorMessage = "Image must be a valid URL.")]
+        // [Url(ErrorMessage = "Image must be a valid URL.")]
         public string Image { get; set; }
     }
 }

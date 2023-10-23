@@ -1,16 +1,11 @@
 using CatalogService.Application.Implementations;
 using CatalogService.Application.Interfaces;
 using CatalogService.Application.Services;
+using CatalogService.Domain.Entities;
 using CatalogService.Persistence.Contexts;
 using CatalogService.Persistence.Repositories;
 using CatalogService.Persistence.Repositories.Interfaces;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using AutoMapper;
-using CatalogService.Domain.Dtos;
 using FluentValidation;
-using CatalogService.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
