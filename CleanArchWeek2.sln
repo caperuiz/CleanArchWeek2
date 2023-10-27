@@ -5,13 +5,17 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.API", "CatalogService.API\CatalogService.API.csproj", "{DF632A2C-D2BB-4892-9A0A-A40429D62225}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.Application", "CatalogService.Application\CatalogService.Application.csproj", "{07BB7BEF-9682-4EAD-8E9E-4641ACC4FF2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.Application", "CatalogService.Application\CatalogService.Application.csproj", "{07BB7BEF-9682-4EAD-8E9E-4641ACC4FF2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.Domain", "CatalogService.Domain\CatalogService.Domain.csproj", "{8A386A44-BE8A-4010-85DB-8CFA4D87CD00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.Domain", "CatalogService.Domain\CatalogService.Domain.csproj", "{8A386A44-BE8A-4010-85DB-8CFA4D87CD00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.Persistence", "CatalogService.Persistence\CatalogService.Persistence.csproj", "{3F4B137F-C4B7-473A-884D-F4ABE7CD8E9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.Persistence", "CatalogService.Persistence\CatalogService.Persistence.csproj", "{3F4B137F-C4B7-473A-884D-F4ABE7CD8E9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.Tests", "CatalogService.Tests\CatalogService.Tests.csproj", "{C0881204-A291-42AC-B8D6-6B059459BBCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.Tests", "CatalogService.Tests\CatalogService.Tests.csproj", "{C0881204-A291-42AC-B8D6-6B059459BBCC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CatalogService", "CatalogService", "{81B295AA-F404-4E84-B02D-CBB2BD3DC449}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CartingService", "CartingService", "{315C36F3-7BDE-49BA-8F08-C4D6F5DFFE8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +46,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DF632A2C-D2BB-4892-9A0A-A40429D62225} = {81B295AA-F404-4E84-B02D-CBB2BD3DC449}
+		{07BB7BEF-9682-4EAD-8E9E-4641ACC4FF2C} = {81B295AA-F404-4E84-B02D-CBB2BD3DC449}
+		{8A386A44-BE8A-4010-85DB-8CFA4D87CD00} = {81B295AA-F404-4E84-B02D-CBB2BD3DC449}
+		{3F4B137F-C4B7-473A-884D-F4ABE7CD8E9C} = {81B295AA-F404-4E84-B02D-CBB2BD3DC449}
+		{C0881204-A291-42AC-B8D6-6B059459BBCC} = {81B295AA-F404-4E84-B02D-CBB2BD3DC449}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3835986F-FF3F-4EF9-ADA2-FF6D1C7C4CD5}
