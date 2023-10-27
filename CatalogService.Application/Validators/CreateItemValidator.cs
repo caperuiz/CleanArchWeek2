@@ -1,5 +1,4 @@
-﻿using CatalogService.Domain.Dtos;
-using CatalogService.Domain.Entities;
+﻿using CatalogService.Domain.Entities;
 using FluentValidation;
 
 public class CreateItemValidator : AbstractValidator<Item>

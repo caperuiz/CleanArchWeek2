@@ -1,14 +1,12 @@
 ﻿using CatalogService.Application.Interfaces;
+<<<<<<< HEAD
 using CatalogService.Common.Dtos;
 using CatalogService.Domain.Dtos;
+=======
+>>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb
 using CatalogService.Domain.Entities;
 using CatalogService.Persistence.Repositories.Interfaces;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CatalogService.Application.Implementations
 {
@@ -23,14 +21,14 @@ namespace CatalogService.Application.Implementations
             _validator = validator;
         }
 
-        public async Task<List<Item>> GetAllItemsAsync()
+        public async Task<List<Item>> GetAllItemsAsync(int categoryId, int page, int pageSize)
         {
-            return await _itemRepository.GetAllAsync();
+            return await _itemRepository.GetAllItemsAsync(categoryId, page, pageSize);
         }
 
         public async Task<Item> GetItemByIdAsync(int id)
         {
-            return await _itemRepository.GetByIdAsync(id);
+            return await _itemRepository.GetItemByIdAsync(id);
         }
 
         public async Task<bool> AddItemAsync(IItemDto itemDto)
@@ -39,19 +37,23 @@ namespace CatalogService.Application.Implementations
 
             if (!validationResult.IsValid)
             {
+<<<<<<< HEAD
                 return await _itemRepository.AddItemAsync(itemDto);
+=======
+                return await _itemRepository.AddItemAsync(item);
+>>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb
             }
             return false;
         }
 
         public async Task<Item> UpdateItemAsync(Item item)
         {
-            return await _itemRepository.UpdateAsync(item);
+            return await _itemRepository.UpdateItemAsync(item);
         }
 
         public async Task<bool> DeleteItemAsync(int id)
         {
-            return await _itemRepository.DeleteAsync(id);
+            return await _itemRepository.DeleteItemAsync(id);
         }
     }
 }

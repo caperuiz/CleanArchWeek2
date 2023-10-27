@@ -1,11 +1,17 @@
 namespace CatalogService.Tests
 {
+    using CatalogService.Application.Services;
+    using CatalogService.Domain.Entities;
+    using Moq;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
+<<<<<<< HEAD
     using Moq;
     using CatalogService.Application.Services;
     using CatalogService.Persistence.Entities;
+=======
+>>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb
 
     public class CategoryServiceTests
     {
@@ -20,7 +26,7 @@ namespace CatalogService.Tests
         };
 
             var mockCategoryRepository = new Mock<ICategoryRepository>();
-            mockCategoryRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(categories);
+            mockCategoryRepository.Setup(repo => repo.GetAllCategoriesAsync()).ReturnsAsync(categories);
 
             var categoryService = new CategoryService(mockCategoryRepository.Object);
 
@@ -40,7 +46,7 @@ namespace CatalogService.Tests
             var category = new Category { Id = categoryId, Name = "Category 1" };
 
             var mockCategoryRepository = new Mock<ICategoryRepository>();
-            mockCategoryRepository.Setup(repo => repo.GetByIdAsync(categoryId)).ReturnsAsync(category);
+            mockCategoryRepository.Setup(repo => repo.GetCategoryByIdAsync(categoryId)).ReturnsAsync(category);
 
             var categoryService = new CategoryService(mockCategoryRepository.Object);
 

@@ -1,14 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
 using CatalogService.Application.Interfaces;
-using CatalogService.Domain.Entities;
-using System.Threading.Tasks;
-using System.Numerics;
-using System.Reflection.Metadata;
-using System.Runtime.Intrinsics.X86;
-using System;
-using AutoMapper;
-using Microsoft.AspNetCore.Components.Forms;
 using CatalogService.Domain.Dtos;
+using CatalogService.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.API.Controllers
 {
@@ -25,9 +19,9 @@ namespace CatalogService.API.Controllers
         }
 
         [HttpGet("get")]
-        public async Task<ActionResult<List<Item>>> GetItemsAsync()
+        public async Task<ActionResult<List<Item>>> GetAllItemsAsync(int categoryId, int page, int pageSize)
         {
-            var items = await _itemService.GetAllItemsAsync();
+            var items = await _itemService.GetAllItemsAsync(categoryId, page, pageSize);
             return Ok(items);
         }
 
@@ -87,6 +81,6 @@ namespace CatalogService.API.Controllers
                 Amount = inputDto.Amount
             };
         }
-  
+
     }
 }

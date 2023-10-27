@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using CatalogService.Common.Dtos;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CatalogService.Domain.Dtos
+=======
+﻿namespace CatalogService.Domain.Dtos
+>>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb
 {
     public class CreateItemInputDto: IItemDto
     {

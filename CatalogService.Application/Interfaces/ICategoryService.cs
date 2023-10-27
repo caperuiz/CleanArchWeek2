@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 ﻿
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CatalogService.Persistence.Entities;
+=======
+﻿using CatalogService.Domain.Entities;
+>>>>>>> a8ba5c3a09ccd2994119f20a1b423610cd3646bb
 
 namespace CatalogService.Application.Interfaces
 {
