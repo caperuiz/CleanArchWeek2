@@ -1,7 +1,9 @@
+using CartingService.Messaging;
 using CatalogService.Application.Implementations;
 using CatalogService.Application.Interfaces;
 using CatalogService.Application.Services;
 using CatalogService.Domain.Entities;
+using CatalogService.Messaging;
 using CatalogService.Persistence.Contexts;
 using CatalogService.Persistence.Repositories;
 using CatalogService.Persistence.Repositories.Interfaces;
@@ -24,6 +26,10 @@ builder.Services.AddScoped<IItemService, ItemService>();
 // Register repository interfaces
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
+
+builder.Services.AddTransient<IRabbitMqService, RabbitMqService>();
+
+builder.Services.AddHostedService<Worker>();
 
 builder.Services.AddTransient<IValidator<Item>, CreateItemValidator>();
 
