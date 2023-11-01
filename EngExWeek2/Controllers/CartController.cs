@@ -28,30 +28,63 @@ namespace EngExWeek2.Controllers
         [HttpGet("GetCartInfo/{id}")]
         public IActionResult GetCart(Guid id)
         {
-            var cart = _cartService.GetCart(id);
-            return Ok(cart);
+            try
+            {
+                var cart = _cartService.GetCart(id);
+                return Ok(cart);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("GetAllCarts")]
         public IActionResult GetAllCarts()
         {
-            var carts = _cartService.GetAllCarts().ToList();
-            return Ok(carts.ToArray());
+            try
+            {
+                var carts = _cartService.GetAllCarts().ToList();
+                return Ok(carts.ToArray());
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
 
         [HttpPost("AddItemToCart")]
         public IActionResult AddItemToCart(Guid cartId, AddCartItem item)
         {
-            _cartService.AddItemToCart(cartId, item);
-            return new OkResult();
+            try
+            {
+                _cartService.AddItemToCart(cartId, item);
+                return new OkResult();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("RemoveItemFromCart")]
         public IActionResult RemoveItemFromCart(Guid cartId, Guid itemId)
         {
-            _cartService.RemoveItemFromCart(cartId, itemId);
-            return new OkResult();
+            try
+            {
+                _cartService.RemoveItemFromCart(cartId, itemId);
+                return new OkResult();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }

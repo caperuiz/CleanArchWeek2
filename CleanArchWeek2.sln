@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartingService.BLL", "Carti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartingService.DAL", "CartingService.DAL\CartingService.DAL.csproj", "{8D12A731-BB6F-4361-906F-AAECDF12CD11}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EngExWeek2", "EngExWeek2\EngExWeek2.csproj", "{382588A7-CED0-446A-9171-AE7D69A85736}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartingService.API", "EngExWeek2\CartingService.API.csproj", "{382588A7-CED0-446A-9171-AE7D69A85736}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
