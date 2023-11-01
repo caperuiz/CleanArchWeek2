@@ -1,10 +1,6 @@
 ﻿using CartingService.DAL.Models;
-using LiteDB;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CartingService.DAL.Repositories
 {
@@ -17,9 +13,9 @@ namespace CartingService.DAL.Repositories
             _context = context;
         }
 
-        public CartDBModel GetById(string id)
+        public CartDBModel GetById(Guid id)
         {
-           return _context.Carts.FindOne(c => c.Id == id);
+            return _context.Carts.FindOne(c => c.Id == id);
         }
 
         public void Update(CartDBModel cart)
@@ -32,14 +28,14 @@ namespace CartingService.DAL.Repositories
             _context.Carts.Insert(cart);
         }
 
-        public void Delete(string id)
+        public void Delete(Guid id)
         {
             _context.Carts.Delete(id);
         }
 
         public IEnumerable<CartDBModel> GetAll()
         {
-           return _context.Carts.FindAll();
+            return _context.Carts.FindAll();
         }
     }
 }

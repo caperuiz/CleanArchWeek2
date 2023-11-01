@@ -1,13 +1,11 @@
 ﻿using CartingService.BLL.CartingService.BLL;
 using CartingService.BLL.Models;
-using CartingService.DAL.Models;
 using LiteDB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace EngExWeek2.Controllers
 {
@@ -25,7 +23,7 @@ namespace EngExWeek2.Controllers
         }
 
         [HttpPost(nameof(GetCart))]
-        public Cart GetCart(string id)
+        public Cart GetCart(Guid id)
         {
             var res = _cartService.GetCartById(id);
             return res;
@@ -34,19 +32,19 @@ namespace EngExWeek2.Controllers
         [HttpPost(nameof(GetAllCarts))]
         public IEnumerable<Cart> GetAllCarts()
         {
-            var res= _cartService.GetAllCarts().ToList();
+            var res = _cartService.GetAllCarts().ToList();
             return res.ToArray();
         }
 
 
         [HttpPost]
-        public void SaveOrUpdateCart(string cartId, CartItem item)
+        public void SaveOrUpdateCart(Guid cartId, AddCartItem item)
         {
             _cartService.AddItemToCart(cartId, item);
         }
 
         [HttpDelete]
-        public void RemoveCart(string cartId, int itemId)
+        public void RemoveCart(Guid cartId, Guid itemId)
         {
             _cartService.RemoveItemFromCart(cartId, itemId);
         }

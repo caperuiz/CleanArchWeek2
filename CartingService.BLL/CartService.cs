@@ -3,9 +3,6 @@ using CartingService.DAL.Models;
 using CartingService.DAL.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CartingService.BLL
 {
@@ -22,7 +19,7 @@ namespace CartingService.BLL
                 _cartRepository = cartRepository;
             }
 
-            public Cart GetCartById(string cartId)
+            public Cart GetCartById(Guid cartId)
             {
                 var cartDbModel = _cartRepository.GetById(cartId);
 
@@ -38,7 +35,7 @@ namespace CartingService.BLL
 
 
 
-            public void AddItemToCart(string cartId, CartItem item)
+            public void AddItemToCart(Guid cartId, AddCartItem item)
             {
                 var cartDbModel = _cartRepository.GetById(cartId);
 
@@ -46,29 +43,26 @@ namespace CartingService.BLL
                 {
                     cartDbModel = new CartDBModel
                     {
-                        Id = cartId
+                        Id = Guid.NewGuid()
                     };
-                }
+                    _cartRepository.Insert(
 
-                var existingItem = cartDbModel.Items.Find(i => i.Id == item.Id);
-
-                if (existingItem != null)
-                {
-                    existingItem.Quantity += item.Quantity;
-                    _cartRepository.Update(cartDbModel);
+                        new CartDBModel() { Id = cartId, Items = new List<CartItemDBModel>() { MapToCartItemDBModel(item) } });
                 }
                 else
                 {
-
-                    _cartRepository.Insert(
-                        
-                        new CartDBModel() { Id = cartId, Items = new List<CartItemDBModel>() { MapToCartItemDBModel(item) } });
+                    cartDbModel.Items.Add(MapToCartItemDBModel(item));
+                    _cartRepository.Update(cartDbModel);
                 }
 
-                
+
+
+
+
+
             }
 
-            public void RemoveItemFromCart(string cartId, int itemId)
+            public void RemoveItemFromCart(Guid cartId, Guid itemId)
             {
                 var cartDbModel = _cartRepository.GetById(cartId);
 
@@ -109,11 +103,11 @@ namespace CartingService.BLL
                 };
             }
 
-            private CartItemDBModel MapToCartItemDBModel(CartItem item)
+            private CartItemDBModel MapToCartItemDBModel(AddCartItem item)
             {
                 return new CartItemDBModel
                 {
-                    Id = item.Id,
+                    Id = Guid.NewGuid(),
                     Name = item.Name,
                     Image = item.Image,
                     Price = item.Price,
@@ -135,10 +129,10 @@ namespace CartingService.BLL
 
         public interface ICartService
         {
-            public Cart GetCartById(string cartId);
-            public void AddItemToCart(string cartId, CartItem item);
+            public Cart GetCartById(Guid cartId);
+            public void AddItemToCart(Guid cartId, AddCartItem item);
             public IEnumerable<Cart> GetAllCarts();
-            public void RemoveItemFromCart(string cartId, int itemId);
+            public void RemoveItemFromCart(Guid cartId, Guid itemId);
 
         }
     }
