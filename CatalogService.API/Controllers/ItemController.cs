@@ -12,20 +12,39 @@ namespace CatalogService.API.Controllers
     {
         private readonly IItemService _itemService;
         private readonly IMapper _mapper;
+
+        /// <summary>
+        /// Controller for managing items.
+        /// </summary>
         public ItemController(IItemService itemService, IMapper mapper)
         {
             _itemService = itemService;
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get a list of all items.
+        /// </summary>
+        /// <param name="categoryId">The category ID.</param>
+        /// <param name="page">The page number.</param>
+        /// <param name="pageSize">The page size.</param>
+        /// <returns>The list of items.</returns>
         [HttpGet("get")]
+        [ProducesResponseType(200, Type = typeof(List<Item>))]
         public async Task<ActionResult<List<Item>>> GetAllItemsAsync(int categoryId, int page, int pageSize)
         {
             var items = await _itemService.GetAllItemsAsync(categoryId, page, pageSize);
             return Ok(items);
         }
 
+        /// <summary>
+        /// Get an item by ID.
+        /// </summary>
+        /// <param name="id">The item ID.</param>
+        /// <returns>The item information.</returns>
         [HttpGet("get/{id}")]
+        [ProducesResponseType(200, Type = typeof(Item))]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<Item>> GetItemByIdAsync(int id)
         {
             var item = await _itemService.GetItemByIdAsync(id);
@@ -37,7 +56,15 @@ namespace CatalogService.API.Controllers
             return Ok(item);
         }
 
+        /// <summary>
+        /// Create a new item.
+        /// </summary>
+        /// <param name="item">The item to create.</param>
+        /// <returns>The created item.</returns>
         [HttpPost("create")]
+        [ProducesResponseType(201, Type = typeof(Item))]
+        [ProducesResponseType(400, Type = typeof(string))]
+
         public async Task<ActionResult<Item>> AddItemAsync(CreateItemInputDto item)
         {
             var mappedItem = _mapper.Map<Item>(item);
@@ -45,7 +72,15 @@ namespace CatalogService.API.Controllers
             return CreatedAtAction(nameof(AddItemAsync), new { id = addedItem.Id }, addedItem);
         }
 
+        /// <summary>
+        /// Update an existing item.
+        /// </summary>
+        /// <param name="item">The item to update.</param>
+        /// <returns>No content if successful, or NotFound if the item is not found.</returns>
         [HttpPut("update/{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+
         public async Task<IActionResult> UpdateItemAsync(Item item)
         {
             var updatedItem = await _itemService.UpdateItemAsync(item);
@@ -57,7 +92,14 @@ namespace CatalogService.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Delete an item by ID.
+        /// </summary>
+        /// <param name="id">The item ID to delete.</param>
+        /// <returns>No content if successful, or NotFound if the item is not found.</returns>
         [HttpDelete("delete/{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteItemAsync(int id)
         {
             var result = await _itemService.DeleteItemAsync(id);
