@@ -19,7 +19,7 @@ namespace CartingService.BLL
                 _cartRepository = cartRepository;
             }
 
-            public Cart GetCartById(Guid cartId)
+            public Cart GetCart(Guid cartId)
             {
                 var cartDbModel = _cartRepository.GetById(cartId);
 
@@ -31,8 +31,6 @@ namespace CartingService.BLL
                 var cart = MapToCart(cartDbModel);
                 return cart;
             }
-
-
 
 
             public void AddItemToCart(Guid cartId, AddCartItem item)
@@ -54,11 +52,6 @@ namespace CartingService.BLL
                     cartDbModel.Items.Add(MapToCartItemDBModel(item));
                     _cartRepository.Update(cartDbModel);
                 }
-
-
-
-
-
 
             }
 
@@ -129,11 +122,10 @@ namespace CartingService.BLL
 
         public interface ICartService
         {
-            public Cart GetCartById(Guid cartId);
+            public Cart GetCart(Guid cartId);
             public void AddItemToCart(Guid cartId, AddCartItem item);
             public IEnumerable<Cart> GetAllCarts();
             public void RemoveItemFromCart(Guid cartId, Guid itemId);
-
         }
     }
 }

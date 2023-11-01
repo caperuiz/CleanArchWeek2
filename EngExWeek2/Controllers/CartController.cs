@@ -1,11 +1,14 @@
 ﻿using CartingService.BLL.CartingService.BLL;
 using CartingService.BLL.Models;
 using LiteDB;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace EngExWeek2.Controllers
 {
@@ -22,31 +25,33 @@ namespace EngExWeek2.Controllers
             _cartService = cartService;
         }
 
-        [HttpPost(nameof(GetCart))]
-        public Cart GetCart(Guid id)
+        [HttpGet("GetCartInfo/{id}")]
+        public IActionResult GetCart(Guid id)
         {
-            var res = _cartService.GetCartById(id);
-            return res;
+            var cart = _cartService.GetCart(id);
+            return Ok(cart);
         }
 
-        [HttpPost(nameof(GetAllCarts))]
-        public IEnumerable<Cart> GetAllCarts()
+        [HttpGet("GetAllCarts")]
+        public IActionResult GetAllCarts()
         {
-            var res = _cartService.GetAllCarts().ToList();
-            return res.ToArray();
+            var carts = _cartService.GetAllCarts().ToList();
+            return Ok(carts.ToArray());
         }
 
 
-        [HttpPost]
-        public void SaveOrUpdateCart(Guid cartId, AddCartItem item)
+        [HttpPost("AddItemToCart")]
+        public IActionResult AddItemToCart(Guid cartId, AddCartItem item)
         {
             _cartService.AddItemToCart(cartId, item);
+            return new OkResult();
         }
 
-        [HttpDelete]
-        public void RemoveCart(Guid cartId, Guid itemId)
+        [HttpDelete("RemoveItemFromCart")]
+        public IActionResult RemoveItemFromCart(Guid cartId, Guid itemId)
         {
             _cartService.RemoveItemFromCart(cartId, itemId);
+            return new OkResult();
         }
     }
 }
