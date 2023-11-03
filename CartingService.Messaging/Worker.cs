@@ -22,7 +22,7 @@ namespace CatalogService.Messaging
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _rabbitMqService.PublishMessage("Hello, RabbitMQ from .NET Core!");
+                _rabbitMqService.PublishMessage("New scheduled message");
                 await Task.Delay(5000, stoppingToken);
             }
         }
