@@ -67,7 +67,7 @@ namespace CatalogService.API.Controllers
         {
             var mappedCategory = _mapper.Map<Category>(category);
             var addedCategory = await _categoryService.AddCategoryAsync(mappedCategory);
-            return CreatedAtAction(nameof(GetCategoryByIdAsync), new { id = addedCategory.Id }, addedCategory);
+            return Ok(category);
         }
 
         /// <summary>

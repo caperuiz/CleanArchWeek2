@@ -69,7 +69,7 @@ namespace CatalogService.API.Controllers
         {
             var mappedItem = _mapper.Map<Item>(item);
             var addedItem = await _itemService.AddItemAsync(mappedItem);
-            return CreatedAtAction(nameof(AddItemAsync), new { id = addedItem.Id }, addedItem);
+            return Ok(addedItem);
         }
 
         /// <summary>

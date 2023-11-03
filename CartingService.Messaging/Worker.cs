@@ -20,11 +20,11 @@ namespace CatalogService.Messaging
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                _rabbitMqService.PublishMessage("New scheduled message");
-                await Task.Delay(5000, stoppingToken);
-            }
+            //while (!stoppingToken.IsCancellationRequested)
+            //{
+            //    //_rabbitMqService.PublishMessage("New scheduled message");
+            //    await Task.Delay(5000, stoppingToken);
+            //}
         }
     }
 }
