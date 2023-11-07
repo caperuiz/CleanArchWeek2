@@ -77,7 +77,7 @@ namespace CatalogService.API.Controllers
         /// </summary>
         /// <param name="item">The item to update.</param>
         /// <returns>No content if successful, or NotFound if the item is not found.</returns>
-        [HttpPut("update/{id}")]
+        [HttpPut("update")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
 

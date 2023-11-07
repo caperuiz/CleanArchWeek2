@@ -75,7 +75,7 @@ namespace CatalogService.API.Controllers
         /// </summary>
         /// <param name="category">The category to update.</param>
         /// <returns>The updated category if successful, or NotFound if the category is not found.</returns>
-        [HttpPut("update/{id}")]
+        [HttpPut("update")]
         [ProducesResponseType(200, Type = typeof(Category))]
         [ProducesResponseType(404)]
         public async Task<IActionResult> UpdateCategoryAsync(Category category)
