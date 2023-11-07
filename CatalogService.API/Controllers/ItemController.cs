@@ -89,7 +89,7 @@ namespace CatalogService.API.Controllers
                 return NotFound();
             }
 
-            return NoContent();
+            return Ok(updatedItem);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace CatalogService.API.Controllers
                 return NotFound();
             }
 
-            return NoContent();
+            return Ok(result);
         }
 
         private Item MapCreateItemInputDtoToItem(CreateItemInputDto inputDto)
