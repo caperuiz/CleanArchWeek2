@@ -5,6 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddHostedService<MessageProcessor>();
+builder.Services.AddSingleton<RabbitMQConsumer>();
+builder.Services.AddSingleton<MongoDBContext>();
+
+
 
 var app = builder.Build();
 
