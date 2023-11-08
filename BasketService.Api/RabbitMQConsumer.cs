@@ -20,14 +20,14 @@ namespace BasketService.API
                 HostName = _configuration["RabbitMQ:HostName"],
                 UserName = _configuration["RabbitMQ:UserName"],
                 Password = _configuration["RabbitMQ:Password"],
-                Port = 5672// _configuration["RabbitMQ:Port"]
+                Port =Convert.ToInt32(_configuration["RabbitMQ:Port"])
             };
 
 
             var connection = factory.CreateConnection();
             _channel = connection.CreateModel();
 
-            _channel.QueueDeclare(queue: configuration["RabbitMQ:QueueName"],
+            _channel.QueueDeclare(queue: _configuration["RabbitMQ:QueueName"],
                                  durable: true,
                                  exclusive: false,
                                  autoDelete: false,
@@ -49,7 +49,7 @@ namespace BasketService.API
                 _channel.BasicAck(ea.DeliveryTag, false);
             };
 
-            _channel.BasicConsume(queue: "my-queue", autoAck: false, consumer: consumer);
+            _channel.BasicConsume(queue: _configuration["RabbitMQ:QueueName"], autoAck: false, consumer: consumer);
         }
         private void SaveToMongoDB(string message)
         {
