@@ -81,9 +81,9 @@ namespace CatalogService.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
 
-        public async Task<IActionResult> UpdateItemAsync(Item item)
+        public async Task<IActionResult> UpdateItemAsync(InputItemDto item)
         {
-            var updatedItem = await _itemService.UpdateItemAsync(item);
+            var updatedItem = await _itemService.UpdateItemAsync(item.ToItem());
             if (updatedItem == null)
             {
                 return NotFound();
