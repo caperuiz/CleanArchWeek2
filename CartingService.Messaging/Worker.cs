@@ -22,8 +22,8 @@ namespace CatalogService.Messaging
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _rabbitMqService.PublishMessage("New scheduled message");
-                await Task.Delay(5000, stoppingToken);
+                //_rabbitMqService.PublishMessage("New scheduled message");
+                await Task.Delay(15000, stoppingToken);
             }
         }
     }

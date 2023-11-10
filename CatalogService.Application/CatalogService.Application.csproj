@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CartingService.Messaging\CatalogService.Messaging.csproj" />
     <ProjectReference Include="..\CatalogService.Domain\CatalogService.Domain.csproj" />
     <ProjectReference Include="..\CatalogService.Persistence\CatalogService.Persistence.csproj" />
   </ItemGroup>

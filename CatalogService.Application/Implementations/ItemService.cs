@@ -1,7 +1,10 @@
-﻿using CatalogService.Application.Interfaces;
+﻿using CartingService.Messaging;
+using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Entities;
 using CatalogService.Persistence.Repositories.Interfaces;
 using FluentValidation;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace CatalogService.Application.Implementations
 {
@@ -9,11 +12,13 @@ namespace CatalogService.Application.Implementations
     {
         private readonly IItemRepository _itemRepository;
         private readonly IValidator<Item> _validator;
+        private readonly IRabbitMqService _rabbitMqService;
 
-        public ItemService(IItemRepository itemRepository, IValidator<Item> validator)
+        public ItemService(IItemRepository itemRepository, IValidator<Item> validator, IRabbitMqService rabbitMqService)
         {
             _itemRepository = itemRepository;
             _validator = validator;
+            _rabbitMqService = rabbitMqService;
         }
 
         public async Task<List<Item>> GetAllItemsAsync(int categoryId, int page, int pageSize)
@@ -39,6 +44,7 @@ namespace CatalogService.Application.Implementations
 
         public async Task<Item> UpdateItemAsync(Item item)
         {
+            _rabbitMqService.PublishMessage(JsonSerializer.Serialize(item));
             return await _itemRepository.UpdateItemAsync(item);
         }
 
