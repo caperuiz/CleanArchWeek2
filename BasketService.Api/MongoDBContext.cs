@@ -14,10 +14,10 @@ namespace BasketService.API
             _database = client.GetDatabase(configuration["MongoDB:DatabaseName"]);
         }
 
-        public IMongoCollection<MyModel> MyCollection => _database.GetCollection<MyModel>("your-collection-name");
+        public IMongoCollection<MongoSavingModel> MyCollection => _database.GetCollection<MongoSavingModel>("your-collection-name");
     }
 
-    public class MyModel
+    public class MongoSavingModel
     {
         public ObjectId Id { get; set; }
         public string Message { get; set; }

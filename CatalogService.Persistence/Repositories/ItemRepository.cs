@@ -17,12 +17,12 @@ namespace CatalogService.Persistence.Repositories
         public async Task<List<Item>> GetAllItemsAsync(int categoryId, int page, int pageSize)
         {
             var startIdx = (page - 1) * pageSize;
-            return await _context.Items.Where(x => x.CategoryId == categoryId).Skip(startIdx).Take(pageSize).ToListAsync();
+            return await _context.Items.Include(x=>x.Category).Where(x => x.CategoryId == categoryId).Skip(startIdx).Take(pageSize).ToListAsync();
         }
 
         public async Task<Item> GetItemByIdAsync(int id)
         {
-            return await _context.Items.FindAsync(id);
+            return await _context.Items.Where(z=>z.Id==id).AsNoTracking().FirstOrDefaultAsync();
         }
 
         public async Task<Item> AddItemAsync(Item item)

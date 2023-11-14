@@ -44,8 +44,14 @@ namespace CatalogService.Application.Implementations
 
         public async Task<Item> UpdateItemAsync(Item item)
         {
-            _rabbitMqService.PublishMessage(JsonSerializer.Serialize(item));
-            return await _itemRepository.UpdateItemAsync(item);
+            var existingItem = await _itemRepository.GetItemByIdAsync(item.Id);
+            var updatedItem= await _itemRepository.UpdateItemAsync(item);
+
+
+            if (existingItem.Name!=updatedItem.Name || existingItem.Price != updatedItem.Price) {
+                _rabbitMqService.PublishMessage(JsonSerializer.Serialize(item));
+            }           
+            return updatedItem;
         }
 
         public async Task<bool> DeleteItemAsync(int id)

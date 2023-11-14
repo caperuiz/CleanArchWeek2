@@ -53,7 +53,7 @@ namespace BasketService.API
         }
         private void SaveToMongoDB(string message)
         {
-            var myModel = new MyModel
+            var myModel = new MongoSavingModel
             {
                 Message = message
             };
