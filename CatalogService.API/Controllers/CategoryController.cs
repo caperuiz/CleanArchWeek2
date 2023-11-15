@@ -4,6 +4,7 @@ using AutoMapper;
 using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Dtos;
 using CatalogService.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.API.Controllers
@@ -28,6 +29,7 @@ namespace CatalogService.API.Controllers
         /// Get a list of all categories.
         /// </summary>
         /// <returns>The list of categories.</returns>
+        [Authorize]
         [HttpGet("get")]
         [ProducesResponseType(200, Type = typeof(List<Category>))]
         public async Task<ActionResult<List<Category>>> GetAllCategoriesAsync()

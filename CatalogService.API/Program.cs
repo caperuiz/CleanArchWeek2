@@ -40,6 +40,25 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = "Cookies";
+    options.DefaultChallengeScheme = "oidc";
+})
+.AddCookie("Cookies")
+.AddOpenIdConnect("oidc", options =>
+{
+    options.Authority = "http://localhost:8180/auth/realms/master";
+    options.ClientId = "EngEx";
+    options.ClientSecret = "UIgpIZ39BxzghY0KFOBMKdnMRjNKLvXJ";
+    options.ResponseType = "code";
+    options.SaveTokens = true;
+    options.GetClaimsFromUserInfoEndpoint = true;
+    options.CallbackPath = "/signin-oidc";
+    // Add any additional configurations based on your needs
+});
+
+
 
 
 var app = builder.Build();
