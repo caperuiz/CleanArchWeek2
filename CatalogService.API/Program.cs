@@ -87,69 +87,6 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultScheme = "Cookies";
-//    options.DefaultChallengeScheme = "oidc";
-//})
-//.AddCookie("Cookies")
-//.AddOpenIdConnect("oidc", options =>
-//{
-//    options.Authority = "http://localhost:8180/auth/realms/master";
-//    options.ClientId = "EngEx";
-//    options.ClientSecret = "UIgpIZ39BxzghY0KFOBMKdnMRjNKLvXJ";
-//    options.ResponseType = "code";
-//    options.SaveTokens = true;
-//    options.GetClaimsFromUserInfoEndpoint = true;
-//    options.CallbackPath = "/signin-oidc";
-//    options.RequireHttpsMetadata = false;
-//    // Add any additional configurations based on your needs
-//});
-
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = "JwtBearer";
-//    options.DefaultChallengeScheme = "JwtBearer";
-//})
-//.AddJwtBearer("JwtBearer", jwtBearerOptions =>
-//{
-//    jwtBearerOptions.Authority = "http://localhost:8180/auth/realms/master";
-//    jwtBearerOptions.Audience = "EngEx";
-//    jwtBearerOptions.RequireHttpsMetadata = false; // Change to true in production
-//});
-
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = "Keycloak";
-//})
-//   .AddCookie()
-//   .AddOpenIdConnect("Keycloak", options =>
-//   {
-//       options.Authority = builder.Configuration["Keycloak:Authority"];
-//       options.ClientId = builder.Configuration["Keycloak:ClientId"];
-//       options.ClientSecret = builder.Configuration["Keycloak:ClientSecret"];
-//       options.ResponseType = builder.Configuration["Keycloak:ResponseType"];
-//       options.SaveTokens = true;
-//       options.RequireHttpsMetadata = false;
-//           options.GetClaimsFromUserInfoEndpoint = true;
-//       options.CallbackPath = "/signin-oidc";
-
-
-//       // Add additional configuration as needed
-//       // ...
-
-//       // Example: handle token validation
-//       options.TokenValidationParameters = new TokenValidationParameters
-//       {
-//           ValidateIssuer = true,
-//           ValidateAudience = true,
-//           ValidateLifetime = true,
-//           ValidateIssuerSigningKey = true,
-//           ValidIssuer = builder.Configuration["Keycloak:Authority"],
-//           ValidAudience = builder.Configuration["Keycloak:ClientId"]
-//       };
-//   });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -167,6 +104,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("read", policy => policy.RequireClaim("scope", "read"));
+});
 
 
 var app = builder.Build();

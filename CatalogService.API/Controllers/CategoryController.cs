@@ -25,28 +25,12 @@ namespace CatalogService.API.Controllers
             _categoryService = categoryService;
             _mapper = mapper;
         }
-        [HttpGet("login")]
-        public IActionResult Login()
-        {
-            var redirectUri = HttpContext.Request.Path;
-            var ret= Challenge(new AuthenticationProperties { RedirectUri = redirectUri }, "Keycloak");           
-            return ret;
-        }
-
-        [HttpGet("getToken")]
-        public IActionResult GetToken()
-        {
-            var accessToken = HttpContext.GetTokenAsync("access_token").Result;
-            // Use the access token as needed
-
-            return Ok("API response");
-        }
 
         /// <summary>
         /// Get a list of all categories.
         /// </summary>
         /// <returns>The list of categories.</returns>
-        [Authorize]
+        [Authorize(Policy = "read")]
         [HttpGet("get")]
         [ProducesResponseType(200, Type = typeof(List<Category>))]
         public async Task<ActionResult<List<Category>>> GetAllCategoriesAsync()
