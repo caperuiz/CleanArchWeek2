@@ -8,6 +8,9 @@ using CatalogService.Persistence.Contexts;
 using CatalogService.Persistence.Repositories;
 using CatalogService.Persistence.Repositories.Interfaces;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,11 +40,11 @@ builder.Services.AddTransient<IValidator<Item>, CreateItemValidator>();
 // ConfigureServices method
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
+    options.AddDefaultPolicy(builder =>
     {
         builder.AllowAnyOrigin()
-               .AllowAnyHeader()
-               .AllowAnyMethod();
+               .AllowAnyMethod()
+               .AllowAnyHeader();
     });
 });
 
@@ -103,19 +106,65 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //    // Add any additional configurations based on your needs
 //});
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = "JwtBearer";
-    options.DefaultChallengeScheme = "JwtBearer";
-})
-.AddJwtBearer("JwtBearer", jwtBearerOptions =>
-{
-    jwtBearerOptions.Authority = "http://localhost:8180/auth/realms/master";
-    jwtBearerOptions.Audience = "EngEx";
-    jwtBearerOptions.RequireHttpsMetadata = false; // Change to true in production
-});
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = "JwtBearer";
+//    options.DefaultChallengeScheme = "JwtBearer";
+//})
+//.AddJwtBearer("JwtBearer", jwtBearerOptions =>
+//{
+//    jwtBearerOptions.Authority = "http://localhost:8180/auth/realms/master";
+//    jwtBearerOptions.Audience = "EngEx";
+//    jwtBearerOptions.RequireHttpsMetadata = false; // Change to true in production
+//});
+
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = "Keycloak";
+//})
+//   .AddCookie()
+//   .AddOpenIdConnect("Keycloak", options =>
+//   {
+//       options.Authority = builder.Configuration["Keycloak:Authority"];
+//       options.ClientId = builder.Configuration["Keycloak:ClientId"];
+//       options.ClientSecret = builder.Configuration["Keycloak:ClientSecret"];
+//       options.ResponseType = builder.Configuration["Keycloak:ResponseType"];
+//       options.SaveTokens = true;
+//       options.RequireHttpsMetadata = false;
+//           options.GetClaimsFromUserInfoEndpoint = true;
+//       options.CallbackPath = "/signin-oidc";
 
 
+//       // Add additional configuration as needed
+//       // ...
+
+//       // Example: handle token validation
+//       options.TokenValidationParameters = new TokenValidationParameters
+//       {
+//           ValidateIssuer = true,
+//           ValidateAudience = true,
+//           ValidateLifetime = true,
+//           ValidateIssuerSigningKey = true,
+//           ValidIssuer = builder.Configuration["Keycloak:Authority"],
+//           ValidAudience = builder.Configuration["Keycloak:ClientId"]
+//       };
+//   });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["Keycloak:Authority"];
+        options.Audience = "account";
+        options.RequireHttpsMetadata = false;
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateLifetime = true,
+            ValidIssuer = builder.Configuration["Keycloak:Authority"]
+        };
+    });
 
 
 
@@ -130,9 +179,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-        app.UseCors("AllowKeycloak");
+app.UseCors();
 
-        app.UseAuthentication();
+app.UseAuthentication();
 
 app.UseAuthorization();
 

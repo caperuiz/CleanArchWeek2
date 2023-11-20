@@ -4,6 +4,7 @@ using AutoMapper;
 using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Dtos;
 using CatalogService.Domain.Entities;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,22 @@ namespace CatalogService.API.Controllers
         {
             _categoryService = categoryService;
             _mapper = mapper;
+        }
+        [HttpGet("login")]
+        public IActionResult Login()
+        {
+            var redirectUri = HttpContext.Request.Path;
+            var ret= Challenge(new AuthenticationProperties { RedirectUri = redirectUri }, "Keycloak");           
+            return ret;
+        }
+
+        [HttpGet("getToken")]
+        public IActionResult GetToken()
+        {
+            var accessToken = HttpContext.GetTokenAsync("access_token").Result;
+            // Use the access token as needed
+
+            return Ok("API response");
         }
 
         /// <summary>
