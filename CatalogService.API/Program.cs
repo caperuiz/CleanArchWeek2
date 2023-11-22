@@ -8,6 +8,7 @@ using CatalogService.Persistence.Contexts;
 using CatalogService.Persistence.Repositories;
 using CatalogService.Persistence.Repositories.Interfaces;
 using FluentValidation;
+using IdentityModel;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -107,8 +108,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("read", policy => policy.RequireClaim("scope", "read"));
+    options.AddPolicy("buyer", policy =>
+        policy.RequireClaim(JwtClaimTypes.Scope, "read"));
+    options.AddPolicy("manager", policy => policy.RequireAssertion(context =>
+    {
+        var requiredScopes = new[] { "create", "update", "delete", "read" };
+
+        return requiredScopes.All(requiredScope =>
+            context.User.HasClaim(c => c.Type == "scope" && c.Value.Contains(requiredScope))
+        );
+    }));
+
 });
+
 
 
 var app = builder.Build();

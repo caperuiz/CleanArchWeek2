@@ -30,7 +30,7 @@ namespace CatalogService.API.Controllers
         /// Get a list of all categories.
         /// </summary>
         /// <returns>The list of categories.</returns>
-        [Authorize(Policy = "read")]
+        [Authorize(Policy = "buyer")]
         [HttpGet("get")]
         [ProducesResponseType(200, Type = typeof(List<Category>))]
         public async Task<ActionResult<List<Category>>> GetAllCategoriesAsync()
@@ -44,6 +44,7 @@ namespace CatalogService.API.Controllers
         /// </summary>
         /// <param name="id">The category ID.</param>
         /// <returns>The category information.</returns>
+        [Authorize(Policy = "buyer")]
         [HttpGet("get/{id}")]
         [ProducesResponseType(200, Type = typeof(Category))]
         [ProducesResponseType(404)]
@@ -63,6 +64,7 @@ namespace CatalogService.API.Controllers
         /// </summary>
         /// <param name="category">The category to create.</param>
         /// <returns>The created category.</returns>
+        [Authorize(Policy = "manager")]
         [HttpPost("create")]
         [ProducesResponseType(201, Type = typeof(Category))]
         [ProducesResponseType(400, Type = typeof(string))]
@@ -78,6 +80,7 @@ namespace CatalogService.API.Controllers
         /// </summary>
         /// <param name="category">The category to update.</param>
         /// <returns>The updated category if successful, or NotFound if the category is not found.</returns>
+        [Authorize(Policy = "manager")]
         [HttpPut("update")]
         [ProducesResponseType(200, Type = typeof(Category))]
         [ProducesResponseType(404)]
@@ -97,6 +100,7 @@ namespace CatalogService.API.Controllers
         /// </summary>
         /// <param name="id">The category ID to delete.</param>
         /// <returns>The ID of the deleted category if successful, or NotFound if the category is not found.</returns>
+        [Authorize(Policy = "manager")]
         [HttpDelete("delete/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
