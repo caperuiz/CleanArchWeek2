@@ -1,4 +1,5 @@
 using CartingService.Messaging;
+using CatalogService.API;
 using CatalogService.Application.Implementations;
 using CatalogService.Application.Interfaces;
 using CatalogService.Application.Services;
@@ -121,6 +122,8 @@ builder.Services.AddAuthorization(options =>
 
 });
 
+builder.Services.AddLogging(builder => builder.AddConsole());
+
 
 
 var app = builder.Build();
@@ -141,7 +144,7 @@ app.UseAuthorization();
 
 // Configure method
 
-
+app.UseMiddleware<AccessTokenLoggingMiddleware>();
 app.MapControllers();
 
 app.Run();
