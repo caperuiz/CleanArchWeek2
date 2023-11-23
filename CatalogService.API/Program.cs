@@ -145,7 +145,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // Configure method
-
+app.UseMiddleware<NoCacheMiddleware>();
 //app.UseMiddleware<AccessTokenLoggingMiddleware>();
 app.UseTokenRefreshMiddleware(builder.Configuration["Keycloak:ClientId"], builder.Configuration["Keycloak:ClientSecret"], builder.Configuration["Keycloak:TokenEndpoint"]);
 app.MapControllers();

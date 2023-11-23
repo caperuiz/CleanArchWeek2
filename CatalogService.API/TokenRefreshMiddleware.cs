@@ -22,7 +22,7 @@ namespace CatalogService.API
         private readonly string _clientSecret;
         private readonly string _tokenEndpoint;
 
-        public TokenRefreshMiddleware(RequestDelegate next, string clientId, string clientSecret, string tokenEndpoint)
+        public TokenRefreshMiddleware( RequestDelegate next, string clientId, string clientSecret, string tokenEndpoint)
         {
             _next = next;
             _clientId = clientId;
