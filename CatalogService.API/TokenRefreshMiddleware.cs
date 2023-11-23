@@ -11,6 +11,7 @@ namespace CatalogService.API
     using System.Net.Http;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authentication;
+    using System.Security.Claims;
 
     public class TokenRefreshMiddleware
     {
@@ -49,15 +50,18 @@ namespace CatalogService.API
 
                     // context.Request.Headers["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
                     var newToken = $"Bearer {tokenResponse.AccessToken}";
-                    var authenticationTicket = context.AuthenticateAsync().Result;
-                    authenticationTicket.Properties.UpdateTokenValue("access_token", tokenResponse.AccessToken);
-                    context.SignInAsync(authenticationTicket.Principal, authenticationTicket.Properties);
+                    var newClaimsIdentity = new ClaimsIdentity(context.User.Identity);
+                    newClaimsIdentity.RemoveClaim(newClaimsIdentity.FindFirst("your_claim_to_replace"));
+                    newClaimsIdentity.AddClaim(new Claim("your_claim_to_replace", "new_value"));
 
-                    // Continue the request pipeline
-                    await _next(context);
-                    return;
+                    var newClaimsPrincipal = new ClaimsPrincipal(newClaimsIdentity);
+
+                    // Sign in with the new principal
+                    await context.SignInAsync(newClaimsPrincipal);
+
+                    // Replace the existing token with the new one in the Authorization header
+                    context.Request.Headers["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
                 }
-            }
 
             // Continue the request pipeline
             await _next(context);
