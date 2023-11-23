@@ -144,24 +144,6 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    // Your endpoints configuration...
-
-    // Example: Configure response caching policy for all endpoints
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller}/{action}")
-        .RequireCors("AllowAllOrigins")
-        .RequireAuthorization()
-        .WithMetadata(new ResponseCacheAttribute
-        {
-            NoStore = true,
-            Location = ResponseCacheLocation.None,
-            Duration = 0
-        });
-});
-
 // Configure method
 
 //app.UseMiddleware<AccessTokenLoggingMiddleware>();
