@@ -12,6 +12,7 @@ using FluentValidation;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -96,6 +97,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.Authority = builder.Configuration["Keycloak:Authority"];
         options.Audience = "account";
         options.RequireHttpsMetadata = false;
+        options.SaveToken = false;
 
         options.TokenValidationParameters = new TokenValidationParameters
         {
@@ -142,9 +144,27 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+app.UseEndpoints(endpoints =>
+{
+    // Your endpoints configuration...
+
+    // Example: Configure response caching policy for all endpoints
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller}/{action}")
+        .RequireCors("AllowAllOrigins")
+        .RequireAuthorization()
+        .WithMetadata(new ResponseCacheAttribute
+        {
+            NoStore = true,
+            Location = ResponseCacheLocation.None,
+            Duration = 0
+        });
+});
+
 // Configure method
 
-app.UseMiddleware<AccessTokenLoggingMiddleware>();
+//app.UseMiddleware<AccessTokenLoggingMiddleware>();
 app.UseTokenRefreshMiddleware(builder.Configuration["Keycloak:ClientId"], builder.Configuration["Keycloak:ClientSecret"], builder.Configuration["Keycloak:TokenEndpoint"]);
 app.MapControllers();
 

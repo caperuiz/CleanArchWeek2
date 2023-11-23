@@ -12,6 +12,8 @@ namespace CatalogService.API
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authentication;
     using System.Security.Claims;
+    using System.IdentityModel.Tokens.Jwt;
+    using Microsoft.Extensions.Logging;
 
     public class TokenRefreshMiddleware
     {
@@ -42,7 +44,7 @@ namespace CatalogService.API
                     ClientId = _clientId,
                     ClientSecret = _clientSecret,
                     GrantType = "client_credentials",
-                  
+
                 });
 
                 if (!tokenResponse.IsError)
@@ -50,21 +52,24 @@ namespace CatalogService.API
 
                     // context.Request.Headers["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
                     var newToken = $"Bearer {tokenResponse.AccessToken}";
-                    var newClaimsIdentity = new ClaimsIdentity(context.User.Identity);
-                    newClaimsIdentity.RemoveClaim(newClaimsIdentity.FindFirst("your_claim_to_replace"));
-                    newClaimsIdentity.AddClaim(new Claim("your_claim_to_replace", "new_value"));
-
-                    var newClaimsPrincipal = new ClaimsPrincipal(newClaimsIdentity);
-
-                    // Sign in with the new principal
-                    await context.SignInAsync(newClaimsPrincipal);
-
-                    // Replace the existing token with the new one in the Authorization header
                     context.Request.Headers["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
+                    var handler = new JwtSecurityTokenHandler();
+                    var jsonToken = handler.ReadToken(tokenResponse.AccessToken) as JwtSecurityToken;
+
+                    // Log the scopes
+                    var scopes = jsonToken?.Claims.FirstOrDefault(c => c.Type == "scope")?.Value;
+
+
+                    var newIdentity = new System.Security.Claims.ClaimsIdentity(jsonToken.Claims, "Bearer", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                    var newPrincipal = new System.Security.Claims.ClaimsPrincipal(newIdentity);
+
+                    context.User = newPrincipal;
+
                 }
 
-            // Continue the request pipeline
-            await _next(context);
+                // Continue the request pipeline
+                await _next(context);
+            }
         }
     }
 
