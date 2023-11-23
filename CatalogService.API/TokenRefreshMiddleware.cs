@@ -56,14 +56,22 @@ namespace CatalogService.API
                     var handler = new JwtSecurityTokenHandler();
                     var jsonToken = handler.ReadToken(tokenResponse.AccessToken) as JwtSecurityToken;
 
+                    var claims = jsonToken.Claims; // Update with your actual claims
+                    var identity = new ClaimsIdentity(claims, "Bearer");
+                    var principal = new ClaimsPrincipal(identity);
+                    var ticket = new AuthenticationTicket(principal, "Bearer");
+
+                    context.User = principal;
+                    context.Request.HttpContext.User = principal;
+
                     // Log the scopes
                     var scopes = jsonToken?.Claims.FirstOrDefault(c => c.Type == "scope")?.Value;
 
 
-                    var newIdentity = new System.Security.Claims.ClaimsIdentity(jsonToken.Claims, "Bearer", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-                    var newPrincipal = new System.Security.Claims.ClaimsPrincipal(newIdentity);
+                    //var newIdentity = new System.Security.Claims.ClaimsIdentity(jsonToken.Claims, "Bearer", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                    //var newPrincipal = new System.Security.Claims.ClaimsPrincipal(newIdentity);
 
-                    context.User = newPrincipal;
+                    //context.User = newPrincipal;
 
                 }
 
