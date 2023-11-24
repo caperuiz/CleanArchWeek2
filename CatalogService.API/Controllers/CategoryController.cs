@@ -44,6 +44,7 @@ namespace CatalogService.API.Controllers
             _logger.LogDebug("This is a {severityLevel} message", LogLevel.Debug);
             _logger.LogInformation("{severityLevel} messages are used to provide contextual information", LogLevel.Information);
             _logger.LogError(new Exception("Application exception"), "These are usually accompanied by an exception");
+            Log();
             var categories = await _categoryService.GetAllCategoriesAsync();
             return Ok(categories);
         }
@@ -52,6 +53,7 @@ namespace CatalogService.API.Controllers
 
         private void Log()
         {
+            throw new NotImplementedException();    
             //using (var activity = activitySource.StartActivity("YourOperationName"))
             //{
             //    try
