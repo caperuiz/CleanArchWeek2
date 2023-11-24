@@ -36,7 +36,7 @@ namespace CatalogService.Domain.Entities
 
         public int Amount { get; set; }
 
-      
+
     }
 
     public static class ItemExtensions

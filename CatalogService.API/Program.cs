@@ -10,11 +10,14 @@ using CatalogService.Persistence.Repositories;
 using CatalogService.Persistence.Repositories.Interfaces;
 using FluentValidation;
 using IdentityModel;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -126,7 +129,28 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddLogging(builder => builder.AddConsole());
 
+builder.Services.AddOpenTelemetry()
+         .WithTracing(builder => builder
+            .AddAspNetCoreInstrumentation()
+            .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("EngEx"))
+            .AddOtlpExporter(o=>
+            {
+                o.Endpoint = new Uri("http://localhost:4317");
+            }
+             ));
 
+//builder.Services.AddOpenTelemetry(builder =>
+//{
+//    builder
+//        .AddAspNetCoreInstrumentation()
+//        .AddHttpClientInstrumentation()
+//        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("YourServiceName"))
+//        .AddJaegerExporter(options =>
+//        {
+//            options.AgentHost = "localhost";
+//            options.AgentPort = 6831;
+//        });
+//});
 
 var app = builder.Build();
 

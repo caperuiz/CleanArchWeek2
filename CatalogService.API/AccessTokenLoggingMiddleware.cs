@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-
-namespace CatalogService.API
+﻿namespace CatalogService.API
 {
 
     public class AccessTokenLoggingMiddleware
@@ -18,11 +14,11 @@ namespace CatalogService.API
 
         public async Task InvokeAsync(HttpContext context)
         {
-            
+
             var accessToken = context.Request.Headers["Authorization"];
             _logger.LogInformation($"Access Token: {accessToken}");
 
-           
+
             await _next(context);
         }
     }

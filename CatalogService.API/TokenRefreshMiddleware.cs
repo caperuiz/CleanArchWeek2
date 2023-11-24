@@ -1,20 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using IdentityModel.Client;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+
 namespace CatalogService.API
 {
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Http;
-    using IdentityModel.Client;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Authentication;
-    using System.Security.Claims;
-    using System.IdentityModel.Tokens.Jwt;
-    using Microsoft.Extensions.Logging;
-
     public class TokenRefreshMiddleware
     {
         private readonly RequestDelegate _next;
@@ -22,7 +12,7 @@ namespace CatalogService.API
         private readonly string _clientSecret;
         private readonly string _tokenEndpoint;
 
-        public TokenRefreshMiddleware( RequestDelegate next, string clientId, string clientSecret, string tokenEndpoint)
+        public TokenRefreshMiddleware(RequestDelegate next, string clientId, string clientSecret, string tokenEndpoint)
         {
             _next = next;
             _clientId = clientId;
@@ -32,7 +22,6 @@ namespace CatalogService.API
 
         public async Task Invoke(HttpContext context)
         {
-            // Check if the current token is expired or needs refreshing
             if (context.Request.Headers.TryGetValue("Authorization", out var authorizationHeader))
             {
                 var existingToken = authorizationHeader.ToString().Replace("Bearer ", string.Empty);
@@ -49,8 +38,6 @@ namespace CatalogService.API
 
                 if (!tokenResponse.IsError)
                 {
-
-                    // context.Request.Headers["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
                     var newToken = $"Bearer {tokenResponse.AccessToken}";
                     context.Request.Headers["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
                     var handler = new JwtSecurityTokenHandler();
@@ -67,15 +54,7 @@ namespace CatalogService.API
                     // Log the scopes
                     var scopes = jsonToken?.Claims.FirstOrDefault(c => c.Type == "scope")?.Value;
 
-
-                    //var newIdentity = new System.Security.Claims.ClaimsIdentity(jsonToken.Claims, "Bearer", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-                    //var newPrincipal = new System.Security.Claims.ClaimsPrincipal(newIdentity);
-
-                    //context.User = newPrincipal;
-
                 }
-
-                // Continue the request pipeline
                 await _next(context);
             }
         }

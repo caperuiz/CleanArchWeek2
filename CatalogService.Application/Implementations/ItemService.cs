@@ -4,7 +4,6 @@ using CatalogService.Domain.Entities;
 using CatalogService.Persistence.Repositories.Interfaces;
 using FluentValidation;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace CatalogService.Application.Implementations
 {
@@ -45,12 +44,13 @@ namespace CatalogService.Application.Implementations
         public async Task<Item> UpdateItemAsync(Item item)
         {
             var existingItem = await _itemRepository.GetItemByIdAsync(item.Id);
-            var updatedItem= await _itemRepository.UpdateItemAsync(item);
+            var updatedItem = await _itemRepository.UpdateItemAsync(item);
 
 
-            if (existingItem.Name!=updatedItem.Name || existingItem.Price != updatedItem.Price) {
+            if (existingItem.Name != updatedItem.Name || existingItem.Price != updatedItem.Price)
+            {
                 _rabbitMqService.PublishMessage(JsonSerializer.Serialize(item));
-            }           
+            }
             return updatedItem;
         }
 

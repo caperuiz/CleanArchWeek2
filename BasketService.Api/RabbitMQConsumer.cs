@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Connections;
-using MongoDB.Driver.Core.Connections;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 
@@ -13,14 +11,14 @@ namespace BasketService.API
         private readonly IConfiguration _configuration;
         public RabbitMQConsumer(IConfiguration configuration, MongoDBContext mongoDBContext)
         {
-            _configuration= configuration;
+            _configuration = configuration;
             var host = _configuration["RabbitMQ:HostName"];
             var factory = new ConnectionFactory
             {
                 HostName = _configuration["RabbitMQ:HostName"],
                 UserName = _configuration["RabbitMQ:UserName"],
                 Password = _configuration["RabbitMQ:Password"],
-                Port =Convert.ToInt32(_configuration["RabbitMQ:Port"])
+                Port = Convert.ToInt32(_configuration["RabbitMQ:Port"])
             };
 
 

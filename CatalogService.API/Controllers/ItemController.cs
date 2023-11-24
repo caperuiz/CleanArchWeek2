@@ -2,7 +2,6 @@
 using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Dtos;
 using CatalogService.Domain.Entities;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.API.Controllers
