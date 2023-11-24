@@ -37,14 +37,36 @@ namespace CatalogService.API.Controllers
         [ProducesResponseType(200, Type = typeof(List<Category>))]
         public async Task<ActionResult<List<Category>>> GetAllCategoriesAsync()
         {
+
             var currentActivity = Activity.Current;
-            currentActivity?.AddEvent(new ActivityEvent("Searching for user"));
+            currentActivity?.AddEvent(new ActivityEvent(nameof(GetAllCategoriesAsync)));
 
             _logger.LogDebug("This is a {severityLevel} message", LogLevel.Debug);
             _logger.LogInformation("{severityLevel} messages are used to provide contextual information", LogLevel.Information);
             _logger.LogError(new Exception("Application exception"), "These are usually accompanied by an exception");
             var categories = await _categoryService.GetAllCategoriesAsync();
             return Ok(categories);
+        }
+
+        private static readonly ActivitySource activitySource = new ActivitySource("YourNamespace");
+
+        private void Log()
+        {
+            //using (var activity = activitySource.StartActivity("YourOperationName"))
+            //{
+            //    try
+            //    {
+            //        // Your code that may throw an exception
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        activity?.AddEvent(new ActivityEvent("Exception"));
+
+            //        // Add attributes to the event
+            //        activity?.SetAttribute("exception.type", ex.GetType().FullName);
+            //        activity?.SetAttribute("exception.message", ex.Message);
+            //    }
+            //}
         }
 
         [HttpGet("error")]
