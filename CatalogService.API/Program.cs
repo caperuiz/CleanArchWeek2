@@ -17,7 +17,7 @@ using Microsoft.OpenApi.Models;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
-
+using OpenTelemetry.Logs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -127,31 +127,50 @@ builder.Services.AddAuthorization(options =>
 
 });
 
-builder.Services.AddLogging(builder => builder.AddConsole());
+//builder.Services.AddLogging((loggingBuilder) => loggingBuilder
+//        .SetMinimumLevel(LogLevel.Debug)
+//        .AddOpenTelemetry(options =>
+//            options.AddConsoleExporter())
+//        );
+
+
+
+//builder.Services.AddOpenTelemetry()
+//         .WithTracing(builder => builder
+//            .AddAspNetCoreInstrumentation()
+//            .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("EngEx"))
+//            .AddOtlpExporter(o =>
+//            {
+//                o.Endpoint = new Uri("http://localhost:4317");
+//            }
+//             )
+//);
+
+var serviceProvider = new ServiceCollection()
+    .AddLogging((loggingBuilder) => loggingBuilder
+        .SetMinimumLevel(LogLevel.Debug)
+        .AddOpenTelemetry(options =>
+            options.AddConsoleExporter()
+                .SetResourceBuilder(
+                    ResourceBuilder.CreateDefault()
+                        .AddService("Tracing.NET EngEx")))
+        )
+    .BuildServiceProvider();
+
+
+var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<Program>();
 
 builder.Services.AddOpenTelemetry()
-         .WithTracing(builder => builder
-            .AddAspNetCoreInstrumentation()
-            .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("EngEx"))
-            .AddOtlpExporter(o=>
-            {
-                o.Endpoint = new Uri("http://localhost:4317");
-            }
-             ));
-
-//builder.Services.AddOpenTelemetry(builder =>
-//{
-//    builder
-//        .AddAspNetCoreInstrumentation()
-//        .AddHttpClientInstrumentation()
-//        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("YourServiceName"))
-//        .AddJaegerExporter(options =>
-//        {
-//            options.AgentHost = "localhost";
-//            options.AgentPort = 6831;
-//        });
-//});
-
+    .WithTracing(builder => builder
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddSqlClientInstrumentation()
+        .AddConsoleExporter()
+        .AddJaegerExporter()
+          .AddSource("Tracing.NET EngEx")
+        .SetResourceBuilder(
+            ResourceBuilder.CreateDefault()
+                .AddService(serviceName: "Tracing.NET EngEx")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -168,7 +187,6 @@ app.UseAuthentication();
 
 
 
-// Configure method
 app.UseMiddleware<NoCacheMiddleware>();
 //app.UseMiddleware<AccessTokenLoggingMiddleware>();
 app.UseTokenRefreshMiddleware(builder.Configuration["Keycloak:ClientId"], builder.Configuration["Keycloak:ClientSecret"], builder.Configuration["Keycloak:TokenEndpoint"]);

@@ -6,6 +6,7 @@ using CatalogService.Domain.Dtos;
 using CatalogService.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace CatalogService.API.Controllers
 {
@@ -18,11 +19,13 @@ namespace CatalogService.API.Controllers
     {
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
+        private readonly ILogger<CategoryController> _logger;
 
-        public CategoryController(ICategoryService categoryService, IMapper mapper)
+        public CategoryController(ILogger<CategoryController> logger, ICategoryService categoryService, IMapper mapper)
         {
             _categoryService = categoryService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -34,9 +37,23 @@ namespace CatalogService.API.Controllers
         [ProducesResponseType(200, Type = typeof(List<Category>))]
         public async Task<ActionResult<List<Category>>> GetAllCategoriesAsync()
         {
-            //throw new NotImplementedException();
+            var currentActivity = Activity.Current;
+            currentActivity?.AddEvent(new ActivityEvent("Searching for user"));
+
+            _logger.LogDebug("This is a {severityLevel} message", LogLevel.Debug);
+            _logger.LogInformation("{severityLevel} messages are used to provide contextual information", LogLevel.Information);
+            _logger.LogError(new Exception("Application exception"), "These are usually accompanied by an exception");
             var categories = await _categoryService.GetAllCategoriesAsync();
             return Ok(categories);
+        }
+
+        [HttpGet("error")]
+       
+        public async Task Error()
+        {
+            _logger.LogInformation("info logged");
+            throw new NotImplementedException();
+           
         }
 
         /// <summary>
