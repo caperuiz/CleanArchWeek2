@@ -34,6 +34,7 @@ namespace CatalogService.API.Controllers
         [ProducesResponseType(200, Type = typeof(List<Category>))]
         public async Task<ActionResult<List<Category>>> GetAllCategoriesAsync()
         {
+            //throw new NotImplementedException();
             var categories = await _categoryService.GetAllCategoriesAsync();
             return Ok(categories);
         }

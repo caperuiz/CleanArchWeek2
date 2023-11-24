@@ -48,6 +48,7 @@ namespace CatalogService.API.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Item>> GetItemByIdAsync(int id)
         {
+            throw new NotImplementedException();
             var item = await _itemService.GetItemByIdAsync(id);
             if (item == null)
             {
