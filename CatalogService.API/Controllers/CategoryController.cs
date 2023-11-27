@@ -42,7 +42,7 @@ namespace CatalogService.API.Controllers
             currentActivity?.AddEvent(new ActivityEvent(nameof(GetAllCategoriesAsync)));
 
            
-            LogException();
+            //LogException();
             var categories = await _categoryService.GetAllCategoriesAsync();
             return Ok(categories);
         }
@@ -52,21 +52,6 @@ namespace CatalogService.API.Controllers
         private void LogException()
         {
             throw new NotImplementedException();    
-            //using (var activity = activitySource.StartActivity("YourOperationName"))
-            //{
-            //    try
-            //    {
-            //        // Your code that may throw an exception
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        activity?.AddEvent(new ActivityEvent("Exception"));
-
-            //        // Add attributes to the event
-            //        activity?.SetAttribute("exception.type", ex.GetType().FullName);
-            //        activity?.SetAttribute("exception.message", ex.Message);
-            //    }
-            //}
         }
 
         [HttpGet("error")]
