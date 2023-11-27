@@ -41,17 +41,15 @@ namespace CatalogService.API.Controllers
             var currentActivity = Activity.Current;
             currentActivity?.AddEvent(new ActivityEvent(nameof(GetAllCategoriesAsync)));
 
-            _logger.LogDebug("This is a {severityLevel} message", LogLevel.Debug);
-            _logger.LogInformation("{severityLevel} messages are used to provide contextual information", LogLevel.Information);
-            _logger.LogError(new Exception("Application exception"), "These are usually accompanied by an exception");
-            Log();
+           
+            LogException();
             var categories = await _categoryService.GetAllCategoriesAsync();
             return Ok(categories);
         }
 
         private static readonly ActivitySource activitySource = new ActivitySource("YourNamespace");
 
-        private void Log()
+        private void LogException()
         {
             throw new NotImplementedException();    
             //using (var activity = activitySource.StartActivity("YourOperationName"))

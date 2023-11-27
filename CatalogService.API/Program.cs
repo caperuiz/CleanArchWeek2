@@ -18,8 +18,14 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Logs;
+using Serilog.Sinks.Elasticsearch;
+using Serilog;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+ConfigureLogging();
+builder.Host.UseSerilog();
 
 var conn = builder.Configuration.GetSection("ConnectionString").Get<string>();
 
@@ -145,20 +151,34 @@ builder.Services.AddAuthorization(options =>
 //            }
 //             )
 //);
+void ConfigureLogging()
+{
+    var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+    var configuration = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddJsonFile(
+            $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
+            optional: true)
+        .Build();
 
-var serviceProvider = new ServiceCollection()
-    .AddLogging((loggingBuilder) => loggingBuilder
-        .SetMinimumLevel(LogLevel.Debug)
-        .AddOpenTelemetry(options =>
-            options.AddConsoleExporter()
-                .SetResourceBuilder(
-                    ResourceBuilder.CreateDefault()
-                        .AddService("Tracing.NET EngEx")))
-        )
-    .BuildServiceProvider();
+    Log.Logger = new LoggerConfiguration()
+        .Enrich.FromLogContext()
+        .WriteTo.Debug()
+        .WriteTo.Console()
+        .WriteTo.Elasticsearch(ConfigureElasticSink(configuration, environment))
+        .Enrich.WithProperty("Environment", environment)
+        .ReadFrom.Configuration(configuration)
+        .CreateLogger();
+}
 
-
-var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<Program>();
+ElasticsearchSinkOptions ConfigureElasticSink(IConfigurationRoot configuration, string environment)
+{
+    return new ElasticsearchSinkOptions(new Uri(configuration["ElasticConfiguration:Uri"]))
+    {
+        AutoRegisterTemplate = true,
+        IndexFormat = $"{Assembly.GetExecutingAssembly().GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}"
+    };
+}
 
 builder.Services.AddOpenTelemetry()
     .WithTracing(builder => builder
